@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="AlwaysShowAction">
+    <item
+        android:id="@+id/attachPhoto"
+        android:title="@string/attach_photo_description"
+        android:icon="@drawable/ic_photo_camera"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction"
+/>
+
+    <item
+        android:id="@+id/attach"
+        android:title="@string/attach_description"
+        android:icon="@drawable/ic_attach_file_24"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/tagUsers"
+        android:title="@string/tag_users_description"
+        android:icon="@drawable/ic_item_users"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/location"
+        android:title="@string/location_description"
+        android:icon="@drawable/ic_location_pin_24"
+        app:showAsAction="always" />
+</menu>

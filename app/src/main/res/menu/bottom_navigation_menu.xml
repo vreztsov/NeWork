@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/item_posts"
+        android:enabled="true"
+        android:icon="@drawable/ic_item_posts"
+        android:title="@string/text_label_posts"/>
+    <item
+        android:id="@+id/item_events"
+        android:enabled="true"
+        android:icon="@drawable/ic_item_events"
+        android:title="@string/text_label_events"/>
+    <item
+        android:id="@+id/item_users"
+        android:enabled="true"
+        android:icon="@drawable/ic_item_users"
+        android:title="@string/text_label_users"/>
+</menu>
