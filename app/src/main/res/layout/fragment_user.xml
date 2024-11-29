@@ -7,7 +7,7 @@
     tools:context=".ui.UserFragment">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar"
+        android:id="@+id/loginAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent">
@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
             app:navigationIcon="@drawable/ic_arrow_back_24"
-            app:title="" />
+            tools:title="Name Surname" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -26,7 +26,7 @@
         android:id="@+id/scrollingAvatar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/appbar">
+        app:layout_constraintTop_toBottomOf="@id/loginAppBar">
 
         <ImageView
             android:id="@+id/avatar"

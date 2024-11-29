@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/eventCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_card">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/eventCardContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/common_spacing">
+
+            <ImageView
+                android:id="@+id/avatar"
+                android:layout_width="@dimen/posts_avatar_size"
+                android:layout_height="@dimen/posts_avatar_size"
+                android:layout_marginBottom="@dimen/common_spacing"
+                android:contentDescription="@string/description_author_avatar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/barrier1"
+                app:srcCompat="@drawable/netology_foreground" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/usual_margin"
+                android:layout_marginEnd="@dimen/usual_margin"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textSize="@dimen/author_text_size"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/datePublished"
+                app:layout_constraintEnd_toStartOf="@+id/moreVert"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/avatar"
+                app:layout_constraintTop_toTopOf="@+id/avatar"
+                tools:text="@string/test_title" />
+
+            <TextView
+                android:id="@+id/datePublished"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/usual_margin"
+                android:layout_marginEnd="@dimen/usual_margin"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textSize="@dimen/edit_text_size"
+                app:layout_constraintBottom_toBottomOf="@+id/avatar"
+                app:layout_constraintEnd_toStartOf="@+id/moreVert"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/avatar"
+                app:layout_constraintTop_toBottomOf="@+id/title"
+                tools:text="@string/test_data_published" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/moreVert"
+                style="@style/Widget.AppTheme.MoreButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@android:color/transparent"
+                android:checkable="true"
+                android:textSize="0sp"
+                app:icon="@drawable/ic_more_vert_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="TouchTargetSizeCheck,DuplicateSpeakableTextCheck" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrier1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="avatar, datePublished, title, moreVert" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/eventFormatBlock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/common_spacing"
+                app:layout_constraintTop_toBottomOf="@id/barrier1"
+                app:layout_constraintBottom_toTopOf="@id/barrierEventInfo">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/eventFormat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:textSize="@dimen/author_text_size"
+                        android:textStyle="bold"
+                        tools:text="@string/online"/>
+
+                    <TextView
+                        android:id="@+id/eventDateTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:textSize="@dimen/edit_text_size"
+                        tools:text="@string/test_data_published"/>
+
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/playEventAudio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_event_play_button"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:visibility="invisible"
+                    android:contentDescription="@string/play_audio" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrierEventInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="eventFormatBlock" />
+
+            <TextView
+                android:id="@+id/content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/usual_margin"
+                android:layout_marginEnd="@dimen/usual_margin"
+                android:paddingVertical="@dimen/usual_margin"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@+id/barrierEventInfo"
+                tools:text="@string/test_content" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrier_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="content" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier_video"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            android:visibility="invisible"
+            app:constraint_referenced_ids="eventCardContent" />
+
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            android:visibility="invisible"
+            app:constraint_referenced_ids="attachment_content" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/link_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            android:visibility="invisible"
+            app:constraint_referenced_ids="links" />
+
+        <TextView
+            android:id="@+id/links"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autoLink="web"
+            android:textColor="@color/teal_700"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/barrier2" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/like"
+            style="@style/Widget.AppTheme.LikeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
+            android:background="@android:color/transparent"
+            android:checkable="true"
+            android:textSize="16sp"
+            app:icon="@drawable/ic_like_24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/link_barrier"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/share"
+            style="@style/Widget.AppTheme.ShareButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="4dp"
+            android:background="@android:color/transparent"
+            android:checkable="true"
+            android:textSize="16sp"
+            app:icon="@drawable/ic_shared_24"
+            app:layout_constraintBottom_toBottomOf="@id/like"
+            app:layout_constraintStart_toEndOf="@id/like"
+            app:layout_constraintTop_toTopOf="@id/link_barrier"
+            tools:ignore="TouchTargetSizeCheck"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/join"
+            style="@style/Widget.AppTheme.JoinButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="4dp"
+            android:background="@android:color/transparent"
+            android:checkable="true"
+            android:textSize="16sp"
+            app:icon="@drawable/ic_join_24dp"
+            app:layout_constraintBottom_toBottomOf="@id/like"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/link_barrier"
+            tools:ignore="TouchTargetSizeCheck"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/attachment_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/barrier_video">
+
+            <ImageView
+                android:id="@+id/image_attachment"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/usual_margin"
+                android:layout_marginEnd="@dimen/usual_margin"
+                android:contentDescription="@string/description_photo"
+                android:paddingVertical="@dimen/usual_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/plug_video" />
+
+            <VideoView
+                android:id="@+id/video_attachment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
