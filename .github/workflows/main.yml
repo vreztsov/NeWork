@@ -19,6 +19,11 @@ jobs:
         with:
           java-version: 17
 
+      - name: Decode api.properties
+        env:
+          API_SECRET: ${{ secrets.API_SECRET }}
+        run: echo $API_SECRET > ./api.properties
+
       - name: Build
         run: |
           chmod +x ./gradlew
