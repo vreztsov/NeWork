@@ -55,7 +55,15 @@
     <string name="set_location">Set Location</string>
     <string name="company">Company</string>
     <string name="test_company">ООО \"Рога и копыта\"</string>
-    <string name="test_period">"1 мар 2019 - 1 авг 2020 "</string>
+    <string name="test_period">"1 мар 2019 – 1 авг 2020 "</string>
     <string name="test_position">Главный инженер-программист</string>
     <string name="prompt_post">Post</string>
+    <string name="empty_login">Login can\'t be blank</string>
+    <string name="empty_name">Name can\'t be blank</string>
+    <string name="empty_password">Password can\'t be blank</string>
+    <string name="password_mismatch">Password mismatch</string>
+    <string name="photo_format_requirements">The photo must be a file of type: jpeg, png</string>
+    <string name="photo_size_requirements">Maximum photo size: 2048x2048 px.</string>
+    <string name="registration_403">This login is already registered.</string>
+    <string name="registration_415">Invalid photo format</string>
 </resources>

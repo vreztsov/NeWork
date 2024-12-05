@@ -66,11 +66,17 @@
 
             <ImageView
                 android:id="@+id/registerPhotoImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/reg_page_avatar"
+                android:layout_height="@dimen/reg_page_avatar"
                 android:src="@drawable/ic_upload_photo"
                 android:layout_gravity="center"
+                android:contentDescription="@string/user_photo"
                 />
+            <TextView
+                android:id="@+id/photoInfoText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layoutRegisterLoginTextField"
@@ -149,7 +155,7 @@
                 style="@style/Widget.Material3.Button.TonalButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/prompt_login"
+                android:text="@string/prompt_registration"
                 android:textSize="16sp" />
 
         </LinearLayout>
