@@ -4,11 +4,9 @@ import android.app.Activity
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toFile
 import androidx.fragment.app.Fragment
@@ -34,8 +32,6 @@ class RegistrationFragment : Fragment() {
     private lateinit var binding: FragmentRegistrationBinding
     private val pickImageLauncher = registerPickImageLauncher()
     private var imageFile: File? = null
-
-
     private val maxAvatarSize = 2048
 
     override fun onCreateView(
@@ -78,9 +74,9 @@ class RegistrationFragment : Fragment() {
             AndroidUtils.hideKeyboard(requireView())
             val navController = findNavController()
             val navUp = navController.navigateUp()
-//            if (!navUp) {
-//                // TODO переход в свой профиль
-//            }
+            if (!navUp) {
+                navController.navigate(R.id.action_registrationFragment_to_profileFragment)
+            }
             Log.i(
                 "RegisterFragment was leaved",
                 if (navUp) "navigating up" else "navigating to profile"
@@ -88,7 +84,7 @@ class RegistrationFragment : Fragment() {
         }
         viewModel.registerError.observe(viewLifecycleOwner) { errText ->
             if (errText == null) return@observe
-            showToast(errText)
+            AndroidUtils.showToast(activity, errText)
             binding.registerButton.isEnabled = true
         }
 
@@ -121,6 +117,10 @@ class RegistrationFragment : Fragment() {
     }
 
     private fun setListeners() {
+        binding.topAppBar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
+
         binding.registerButton.setOnClickListener {
             AndroidUtils.hideKeyboard(requireView())
             resetErrors()
@@ -155,6 +155,7 @@ class RegistrationFragment : Fragment() {
             when (it.resultCode) {
                 ImagePicker.RESULT_ERROR -> {
                     binding.photoInfoText.text = ImagePicker.getError(it.data)
+                    binding.photoInfoText.visibility = View.VISIBLE
                 }
 
                 Activity.RESULT_OK -> {
@@ -163,36 +164,6 @@ class RegistrationFragment : Fragment() {
 
             }
         }
-//        registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-////            try {
-//                uri?.let {
-//                    Glide.with(this)
-//                        .load(uri)
-//                        //TODO добавить проверку на формат, который ещё как-то найти нужно. В URI его нет.
-//                        // Проверка на размеры тоже нужна. В Glide это видимо не предусмотрено
-//                        .timeout(2_000)
-//                        .circleCrop()
-//                        .error(R.drawable.ic_upload_photo)
-//                        .into(binding.registerPhotoImageView)
-//                    imageUri = uri
-//                }
-////                    ?: Toast.makeText(requireContext(), "No Image Selected", Toast.LENGTH_SHORT)
-////                .show()
-////            } catch (e: ImageFormatException) {
-////                binding.photoInfoText.setTextColor(
-////                    ContextCompat.getColor(requireContext(), R.color.red_500)
-////                )
-////                binding.photoInfoText.setText(e.messageResId)
-////            }
-//        }
 
-    private fun showToast(textInformation: String) {
-        val warnToast = Toast.makeText(
-            activity,
-            textInformation,
-            Toast.LENGTH_SHORT
-        )
-        warnToast.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
-        warnToast.show()
-    }
+
 }

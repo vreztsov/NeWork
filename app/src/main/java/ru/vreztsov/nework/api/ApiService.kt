@@ -12,6 +12,9 @@ import ru.vreztsov.nework.auth.AuthState
 
 interface ApiService {
 
+    @FormUrlEncoded
+    @POST("users/authentication")
+    suspend fun updateUser(@Field("login") login: String, @Field("pass") pass: String): Response<AuthState>
 
     @FormUrlEncoded
     @POST("users/registration")
