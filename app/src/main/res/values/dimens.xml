@@ -12,4 +12,6 @@
     <dimen name="av_size">48dp</dimen>
     <dimen name="usual_margin">16dp</dimen>
     <dimen name="reg_page_avatar">160dp</dimen>
+    <dimen name="avatar_text_size">20sp</dimen>
+    <dimen name="posts_avatar_radius">20dp</dimen>
 </resources>

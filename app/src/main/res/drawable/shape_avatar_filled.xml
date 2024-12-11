@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="@dimen/posts_avatar_radius" />
+    <solid android:color="@color/basic_purple" />
+    <size
+        android:width="@dimen/posts_avatar_size"
+        android:height="@dimen/posts_avatar_size" />
+</shape>

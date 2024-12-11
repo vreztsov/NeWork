@@ -5,10 +5,12 @@ import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
 import ru.vreztsov.nework.auth.AuthState
+import ru.vreztsov.nework.dto.Post
 
 interface ApiService {
 
@@ -32,6 +34,9 @@ interface ApiService {
         @Part("name") name: RequestBody,
         @Part media: MultipartBody.Part,
     ): Response<AuthState>
+
+    @GET("posts")
+    suspend fun getAll(): Response<List<Post>>
 
 
 }

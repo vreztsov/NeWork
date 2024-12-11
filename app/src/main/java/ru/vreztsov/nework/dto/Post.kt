@@ -2,18 +2,18 @@ package ru.vreztsov.nework.dto
 
 data class Post(
     val id: Long,
-    val author: String,
     val authorId: Long,
-    val authorAvatar: String = "",
-    val authorPosition: String,
+    val author: String,
+    val authorJob: String? = null,
+    val authorAvatar: String? = null,
     val content: String,
     val published: String,
-    val likedByMe: Boolean = false,
-    val likeOwnerIdList: List<Long> = emptyList(),
-    val mentionedMe: Boolean = false,
-    val mentionedIdList: List<Long> = emptyList(),
+    val coords: Coordinates? = null,
     val link: String? = null,
-    //val attachment: Attachment? = null, TODO допилить попозже
-    val coordinates: Coordinates? = null,
+    val mentionIds: List<Long>? = null,
+    val mentionedMe: Boolean = false,
+    val likeOwnerIds: List<Long>? = null,
+    val likedByMe: Boolean = false,
+    val attachment: Attachment? = null,
     val ownedByMe: Boolean = false,
 )

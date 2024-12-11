@@ -17,8 +17,8 @@
             android:layout_height="match_parent"
             android:padding="@dimen/common_spacing">
 
-            <ImageView
-                android:id="@+id/avatar"
+            <FrameLayout
+                android:id="@+id/avatarFrame"
                 android:layout_width="@dimen/posts_avatar_size"
                 android:layout_height="@dimen/posts_avatar_size"
                 android:layout_marginBottom="@dimen/common_spacing"
@@ -26,7 +26,28 @@
                 app:layout_constraintBottom_toBottomOf="@id/header"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@drawable/netology_foreground" />
+                >
+
+                <TextView
+                    android:id="@+id/avatarInitial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/avatar_text_size"
+                    android:layout_gravity="center"
+                    />
+                <ImageView
+                    android:id="@+id/avatar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/description_author_avatar"
+                    />
+
+
+            </FrameLayout>
+
+
+
 
             <TextView
                 android:id="@+id/author"
@@ -40,7 +61,7 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/published"
                 app:layout_constraintEnd_toStartOf="@id/menu"
-                app:layout_constraintStart_toEndOf="@id/avatar"
+                app:layout_constraintStart_toEndOf="@id/avatarFrame"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed"
                 tools:text="@string/test_title" />
@@ -55,7 +76,7 @@
                 android:textSize="@dimen/published_text_size"
                 app:layout_constraintBottom_toBottomOf="@id/header"
                 app:layout_constraintEnd_toStartOf="@id/menu"
-                app:layout_constraintStart_toEndOf="@id/avatar"
+                app:layout_constraintStart_toEndOf="@id/avatarFrame"
                 app:layout_constraintTop_toBottomOf="@id/author"
                 tools:text="@string/test_data_published" />
 
@@ -76,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:visibility="invisible"
                 app:barrierDirection="bottom"
-                app:constraint_referenced_ids="avatar,published,menu" />
+                app:constraint_referenced_ids="avatarFrame,published,menu" />
 
             <TextView
                 android:id="@+id/content"
@@ -148,6 +169,21 @@
             android:textSize="16sp"
             app:icon="@drawable/ic_shared_24"
             app:layout_constraintStart_toEndOf="@id/like"
+            app:layout_constraintTop_toBottomOf="@id/linkBarrier"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/mension"
+            style="@style/Widget.AppTheme.mentions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
+            android:background="@android:color/transparent"
+            android:checkable="true"
+            android:textSize="16sp"
+            app:icon="@drawable/ic_join_24dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/linkBarrier"
             tools:ignore="TouchTargetSizeCheck" />
 

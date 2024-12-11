@@ -4,11 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ru.vreztsov.nework.auth.AppAuth
 import ru.vreztsov.nework.dto.Post
@@ -22,7 +22,7 @@ private val empty = Post(
     author = "",
     authorId = 0,
     published = "",
-    authorPosition = ""
+    authorJob = ""
 )
 
 @HiltViewModel
@@ -31,20 +31,22 @@ class PostViewModel @Inject constructor(
     private val appAuth: AppAuth
 ) : ViewModel() {
 
-    private val cached = repository.data
-        ?.cachedIn(viewModelScope)
-
     @OptIn(ExperimentalCoroutinesApi::class)
-    val data: Flow<PagingData<Post>>? = null
-//        appAuth
-//        .authStateFlow
-//        .flatMapLatest { (myId, _) ->
-//            cached.map { pagingData ->
-//                pagingData.map { post ->
-//                    post.copy(ownedByMe = post.authorId == myId)
-//                }
-//            }
-//        }
+    val data: Flow<List<Post>>
+        get() = appAuth
+            .authStateFlow
+            .flatMapLatest { (myId, _) ->
+                repository.data
+                    .map { posts ->
+                        posts.map { post ->
+                            post.copy(
+                                likedByMe = post.likeOwnerIds?.contains(myId) ?: false,
+                                mentionedMe = post.mentionIds?.contains(myId) ?: false,
+                                ownedByMe = post.authorId == myId
+                            )
+                        }
+                    }
+            }
 
     val isAuthorized: Boolean
         get() = appAuth.authStateFlow.value.id != 0L
@@ -62,7 +64,7 @@ class PostViewModel @Inject constructor(
     fun loadPosts() = viewModelScope.launch {
         try {
             _dataState.value = PostsModelState(loading = true)
-//            repository.getInitialPostPage()
+            repository.getAllAsync()
             _dataState.value = PostsModelState()
         } catch (e: Exception) {
             _dataState.value = PostsModelState(error = true)
@@ -72,14 +74,14 @@ class PostViewModel @Inject constructor(
     fun refreshPosts() = viewModelScope.launch {
         try {
             _dataState.value = PostsModelState(refreshing = true)
-//            repository.getInitialPostPage()
+            repository.getAllAsync()
             _dataState.value = PostsModelState()
         } catch (e: Exception) {
             _dataState.value = PostsModelState(error = true)
         }
     }
 
-    fun edit(post: Post){
+    fun edit(post: Post) {
         edited.value = post
     }
 
@@ -100,7 +102,6 @@ class PostViewModel @Inject constructor(
             _dataState.value = PostsModelState(error = true)
         }
     }
-
 
 
 }

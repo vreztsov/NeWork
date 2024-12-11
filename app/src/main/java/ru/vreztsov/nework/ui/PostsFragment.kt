@@ -28,6 +28,7 @@ import ru.vreztsov.nework.viewmodel.PostViewModel
 class PostsFragment : Fragment() {
 
     private lateinit var binding: FragmentPostsBinding
+    private lateinit var adapter: PostsAdapter
     private val viewModel: PostViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -37,15 +38,8 @@ class PostsFragment : Fragment() {
     ): View {
         binding = FragmentPostsBinding.inflate(inflater, container, false)
         binding.bottomNavigation.selectedItemId = R.id.item_posts
-        val adapter: PostsAdapter = createAdapter()
+        adapter = createAdapter()
         binding.postsList.adapter = adapter
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
-                viewModel.data?.collectLatest {
-                    adapter.submitData(it)
-                }
-            }
-        }
         subscribe()
         setListeners()
         return binding.root
@@ -93,6 +87,13 @@ class PostsFragment : Fragment() {
     )
 
     private fun subscribe() {
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
+                viewModel.data.collectLatest {
+                    adapter.submitList(it)
+                }
+            }
+        }
         viewModel.dataState.observe(viewLifecycleOwner) { state ->
             //TODO пока пусто
         }
