@@ -3,10 +3,11 @@ package ru.vreztsov.nework.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -32,7 +33,7 @@ class PostViewModel @Inject constructor(
 ) : ViewModel() {
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val data: Flow<List<Post>>
+    val data: LiveData<List<Post>>
         get() = appAuth
             .authStateFlow
             .flatMapLatest { (myId, _) ->
@@ -46,7 +47,7 @@ class PostViewModel @Inject constructor(
                             )
                         }
                     }
-            }
+            }.asLiveData(Dispatchers.Default)
 
     val isAuthorized: Boolean
         get() = appAuth.authStateFlow.value.id != 0L
@@ -87,7 +88,8 @@ class PostViewModel @Inject constructor(
 
     fun likeById(id: Long) = viewModelScope.launch {
         try {
-//            repository.likeById(id)
+            if (!isAuthorized) throw RuntimeException("User is not authorized")
+            repository.likeById(id)
             _dataState.value = PostsModelState()
         } catch (e: Exception) {
             _dataState.value = PostsModelState(error = true)

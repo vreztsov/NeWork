@@ -90,10 +90,14 @@ class PostViewHolder(
                         target: Target<Drawable>,
                         isFirstResource: Boolean
                     ): Boolean {
-                        avatarFrame.background = AppCompatResources.getDrawable(root.context, R.drawable.shape_avatar_filled)
+                        avatarFrame.background = AppCompatResources.getDrawable(
+                            root.context,
+                            R.drawable.shape_avatar_filled
+                        )
                         avatarInitial.visibility = View.VISIBLE
                         return false
                     }
+
                     override fun onResourceReady(
                         resource: Drawable,
                         model: Any,
@@ -101,7 +105,10 @@ class PostViewHolder(
                         dataSource: DataSource,
                         isFirstResource: Boolean
                     ): Boolean {
-                        avatarFrame.background = AppCompatResources.getDrawable(root.context, R.drawable.shape_avatar_transparent)
+                        avatarFrame.background = AppCompatResources.getDrawable(
+                            root.context,
+                            R.drawable.shape_avatar_transparent
+                        )
                         avatarInitial.visibility = View.GONE
                         return false
                     }

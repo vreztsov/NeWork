@@ -6,4 +6,5 @@ import ru.vreztsov.nework.dto.Post
 interface PostRepository {
     val data: Flow<List<Post>>
     suspend fun getAllAsync()
+    suspend fun likeById(postId: Long)
 }

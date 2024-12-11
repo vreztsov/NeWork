@@ -7,12 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import ru.vreztsov.nework.R
 import ru.vreztsov.nework.adapter.PostsAdapter
 import ru.vreztsov.nework.adapter.PostsOnInteractionListener
@@ -87,15 +82,12 @@ class PostsFragment : Fragment() {
     )
 
     private fun subscribe() {
-        lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
-                viewModel.data.collectLatest {
-                    adapter.submitList(it)
-                }
-            }
+        viewModel.data.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
         }
+
         viewModel.dataState.observe(viewLifecycleOwner) { state ->
-            //TODO пока пусто
+            // TODO пока пусто
         }
     }
 
