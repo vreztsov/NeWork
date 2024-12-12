@@ -214,7 +214,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:text="@string/play_audio"
-                android:textSize="24sp"
+                android:textSize="@dimen/author_text_size"
                 app:layout_constraintStart_toEndOf="@+id/playButtonPostAudio"
                 app:layout_constraintTop_toBottomOf="@+id/imageAttachment"
                 tools:ignore="MissingConstraints" />
@@ -226,7 +226,7 @@
                 android:layout_margin="16dp"
                 android:contentDescription="@string/play_video"
                 android:foregroundTint="@color/white"
-                android:src="@drawable/play_icon"
+                android:src="@drawable/ic_play_circle"
                 app:backgroundTint="@color/purple_200"
                 app:fabSize="mini"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -239,16 +239,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:contentDescription="@string/play_video"
+                app:fabCustomSize="@dimen/posts_avatar_size"
+                android:contentDescription="@string/play_audio"
                 android:foregroundTint="@color/white"
-                android:src="@drawable/play_icon"
-                android:visibility="gone"
+                android:src="@drawable/ic_play_circle"
                 app:backgroundTint="@color/purple_700"
-                app:fabCustomSize="40dp"
                 app:layout_constraintBottom_toBottomOf="@id/descriptionAttachment"
                 app:layout_constraintEnd_toStartOf="@id/descriptionAttachment"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/descriptionAttachment" />
+
 
             <VideoView
                 android:id="@+id/videoAttachment"

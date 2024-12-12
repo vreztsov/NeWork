@@ -1,5 +1,16 @@
-<vector android:height="24dp" android:tint="#FFFFFF"
-    android:viewportHeight="24" android:viewportWidth="24"
-    android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
-    <path android:fillColor="@android:color/white" android:pathData="M8,5v14l11,-7z"/>
-</vector>
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:drawable="@drawable/ic_pause_circle"
+        android:state_checked="true"
+        />
+    <item
+        android:drawable="@drawable/ic_play_circle"
+        />
+</selector>
+
+    <!--<vector android:height="24dp" android:tint="#FFFFFF"-->
+    <!--    android:viewportHeight="24" android:viewportWidth="24"-->
+    <!--    android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">-->
+    <!--    <path android:fillColor="@android:color/white" android:pathData="M8,5v14l11,-7z"/>-->
+    <!--</vector>-->
