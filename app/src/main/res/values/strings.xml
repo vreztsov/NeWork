@@ -67,4 +67,5 @@
     <string name="registration_403">This login is already registered.</string>
     <string name="registration_415">Invalid photo format</string>
     <string name="chooser_share_post">Share post</string>
+    <string name="mentioned">Mentioned</string>
 </resources>

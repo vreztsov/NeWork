@@ -13,3 +13,9 @@ class LoginException(override val message: String) : RuntimeException(message) {
         const val ERR_404 = "User is not registered"
     }
 }
+
+//class UserException(override val message: String) : RuntimeException(message) {
+//    companion object {
+//        const val ERR_404 = "User not found"
+//    }
+//}

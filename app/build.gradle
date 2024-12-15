@@ -20,6 +20,7 @@ android {
 
         buildConfigField "String", "BASE_URL", '"http://94.228.125.136:8080"'
         buildConfigField "String", "SERVER_API_KEY", "\"${serverApiKey}\""
+        buildConfigField "String", "MAPS_API_KEY", "\"${mapsApiKey}\""
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

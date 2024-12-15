@@ -38,16 +38,41 @@
                 android:layout_height="match_parent"
                 android:padding="@dimen/common_spacing">
 
-                <ImageView
-                    android:id="@+id/avatar"
+                <!--                <ImageView-->
+                <!--                    android:id="@+id/avatarFrame"-->
+                <!--                    android:layout_width="@dimen/posts_avatar_size"-->
+                <!--                    android:layout_height="@dimen/posts_avatar_size"-->
+                <!--                    android:layout_marginBottom="@dimen/common_spacing"-->
+                <!--                    android:contentDescription="@string/description_author_avatar"-->
+                <!--                    app:layout_constraintBottom_toBottomOf="@id/header"-->
+                <!--                    app:layout_constraintStart_toStartOf="parent"-->
+                <!--                    app:layout_constraintTop_toTopOf="parent"-->
+                <!--                    tools:srcCompat="@drawable/netology_foreground" />-->
+
+                <FrameLayout
+                    android:id="@+id/avatar_frame"
                     android:layout_width="@dimen/posts_avatar_size"
                     android:layout_height="@dimen/posts_avatar_size"
                     android:layout_marginBottom="@dimen/common_spacing"
                     android:contentDescription="@string/description_author_avatar"
                     app:layout_constraintBottom_toBottomOf="@id/header"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@drawable/netology_foreground" />
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/avatar_initial"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/avatar_text_size" />
+
+                    <ImageView
+                        android:id="@+id/avatar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/description_author_avatar" />
+                </FrameLayout>
 
                 <TextView
                     android:id="@+id/author"
@@ -61,7 +86,7 @@
                     android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@+id/authorJob"
                     app:layout_constraintEnd_toStartOf="@id/menu"
-                    app:layout_constraintStart_toEndOf="@id/avatar"
+                    app:layout_constraintStart_toEndOf="@id/avatar_frame"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_chainStyle="packed"
                     tools:text="@string/test_title" />
@@ -76,7 +101,7 @@
                     android:textSize="@dimen/published_text_size"
                     app:layout_constraintBottom_toBottomOf="@id/header"
                     app:layout_constraintEnd_toStartOf="@id/menu"
-                    app:layout_constraintStart_toEndOf="@id/avatar"
+                    app:layout_constraintStart_toEndOf="@id/avatar_frame"
                     app:layout_constraintTop_toBottomOf="@id/author"
                     tools:text="@string/test_position" />
 
@@ -97,7 +122,7 @@
                     android:layout_height="wrap_content"
                     android:visibility="invisible"
                     app:barrierDirection="bottom"
-                    app:constraint_referenced_ids="avatar,authorJob,menu" />
+                    app:constraint_referenced_ids="avatar_frame,authorJob,menu" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -114,7 +139,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:barrierDirection="bottom"
-                app:constraint_referenced_ids="attachmentContent" />
+                app:constraint_referenced_ids="attachment_content" />
 
             <androidx.constraintlayout.widget.Barrier
                 android:id="@+id/linkBarrier"
@@ -132,45 +157,45 @@
                 app:layout_constraintTop_toBottomOf="@id/barrier2" />
 
 
-<!--            <com.google.android.material.button.MaterialButton-->
-<!--                android:id="@+id/like"-->
-<!--                style="@style/Widget.AppTheme.LikeButton"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="12dp"-->
-<!--                android:layout_marginTop="4dp"-->
-<!--                android:background="@android:color/transparent"-->
-<!--                android:checkable="true"-->
-<!--                android:textSize="16sp"-->
-<!--                app:icon="@drawable/ic_like_24dp"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/linkBarrier"-->
-<!--                tools:ignore="TouchTargetSizeCheck" />-->
+            <!--            <com.google.android.material.button.MaterialButton-->
+            <!--                android:id="@+id/like"-->
+            <!--                style="@style/Widget.AppTheme.LikeButton"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginStart="12dp"-->
+            <!--                android:layout_marginTop="4dp"-->
+            <!--                android:background="@android:color/transparent"-->
+            <!--                android:checkable="true"-->
+            <!--                android:textSize="16sp"-->
+            <!--                app:icon="@drawable/ic_like_24dp"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/linkBarrier"-->
+            <!--                tools:ignore="TouchTargetSizeCheck" />-->
 
-<!--            <com.google.android.material.button.MaterialButton-->
-<!--                android:id="@+id/share"-->
-<!--                style="@style/Widget.AppTheme.ShareButton"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="4dp"-->
-<!--                android:background="@android:color/transparent"-->
-<!--                android:checkable="true"-->
-<!--                android:textSize="16sp"-->
-<!--                app:icon="@drawable/ic_shared_24"-->
-<!--                app:layout_constraintStart_toEndOf="@id/like"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/linkBarrier"-->
-<!--                tools:ignore="TouchTargetSizeCheck" />-->
+            <!--            <com.google.android.material.button.MaterialButton-->
+            <!--                android:id="@+id/share"-->
+            <!--                style="@style/Widget.AppTheme.ShareButton"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="4dp"-->
+            <!--                android:background="@android:color/transparent"-->
+            <!--                android:checkable="true"-->
+            <!--                android:textSize="16sp"-->
+            <!--                app:icon="@drawable/ic_shared_24"-->
+            <!--                app:layout_constraintStart_toEndOf="@id/like"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/linkBarrier"-->
+            <!--                tools:ignore="TouchTargetSizeCheck" />-->
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/attachmentContent"
+                android:id="@+id/attachment_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@+id/barrierVideo">
 
                 <ImageView
-                    android:id="@+id/imageAttachment"
+                    android:id="@+id/image_attachment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/basic_screen_padding"
@@ -183,17 +208,17 @@
                     tools:ignore="MissingConstraints" />
 
                 <TextView
-                    android:id="@+id/descriptionAttachment"
+                    android:id="@+id/description_attachment"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:text="@string/play_audio"
                     android:textSize="24sp"
-                    app:layout_constraintStart_toEndOf="@+id/playButtonPostAudio"
-                    app:layout_constraintTop_toBottomOf="@+id/imageAttachment"
+                    app:layout_constraintStart_toEndOf="@+id/play_button_post_audio"
+                    app:layout_constraintTop_toBottomOf="@+id/image_attachment"
                     tools:ignore="MissingConstraints" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/playButtonPost"
+                    android:id="@+id/play_button_post"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
@@ -208,7 +233,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/playButtonPostAudio"
+                    android:id="@+id/play_button_post_audio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
@@ -218,13 +243,13 @@
                     android:visibility="gone"
                     app:backgroundTint="@color/purple_700"
                     app:fabCustomSize="40dp"
-                    app:layout_constraintBottom_toBottomOf="@id/descriptionAttachment"
-                    app:layout_constraintEnd_toStartOf="@id/descriptionAttachment"
+                    app:layout_constraintBottom_toBottomOf="@id/description_attachment"
+                    app:layout_constraintEnd_toStartOf="@id/description_attachment"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/descriptionAttachment" />
+                    app:layout_constraintTop_toTopOf="@id/description_attachment" />
 
                 <VideoView
-                    android:id="@+id/videoAttachment"
+                    android:id="@+id/video_attachment"
                     android:layout_width="400dp"
                     android:layout_height="225dp"
                     android:visibility="gone"
@@ -240,11 +265,11 @@
                 android:id="@+id/published"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/usual_margin"
                 android:layout_marginStart="@dimen/basic_screen_padding"
                 android:layout_marginEnd="@dimen/basic_screen_padding"
-                android:layout_marginVertical="@dimen/usual_margin"
                 android:textSize="@dimen/published_text_size"
-                app:layout_constraintTop_toBottomOf="@id/attachmentContent"
+                app:layout_constraintTop_toBottomOf="@id/attachment_content"
                 tools:text="@string/test_data_published" />
 
             <TextView
@@ -267,7 +292,6 @@
                 app:layout_constraintTop_toBottomOf="@id/content">
 
                 <TextView
-                    android:id="@+id/likers"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
@@ -279,6 +303,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
                     android:orientation="horizontal">
 
                     <com.google.android.material.button.MaterialButton
@@ -287,17 +312,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="12dp"
                         android:background="@android:color/transparent"
                         android:checkable="true"
                         android:textSize="16sp"
                         app:icon="@drawable/ic_like_24dp"
                         tools:ignore="TouchTargetSizeCheck" />
 
-                    <RelativeLayout
-                        android:id="@+id/likersList"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/likers_list"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"></RelativeLayout>
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/frame_mini_avatar" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -311,44 +339,103 @@
                 app:layout_constraintTop_toBottomOf="@id/likersLayout">
 
                 <TextView
-                    android:id="@+id/mentioned"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:singleLine="true"
-                    android:text="@string/participants"
+                    android:text="@string/mentioned"
                     android:textSize="@dimen/author_text_size"
                     android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginTop="4dp">
 
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/mension"
                         style="@style/Widget.AppTheme.JoinButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="12dp"
                         android:background="@android:color/transparent"
                         android:checkable="true"
                         android:textSize="16sp"
                         app:icon="@drawable/ic_join_24dp"
                         tools:ignore="TouchTargetSizeCheck" />
 
-                    <RelativeLayout
-                        android:id="@+id/participantsList"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/mensioned_list"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"></RelativeLayout>
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/frame_mini_avatar" />
+
+                    <!--                    <androidx.constraintlayout.widget.ConstraintLayout-->
+                    <!--                        android:id="@+id/mensioned_list"-->
+                    <!--                        android:layout_width="match_parent"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_marginTop="4dp">-->
+                    <!--                        <FrameLayout-->
+                    <!--                            android:id="@+id/av1"-->
+                    <!--                            android:layout_width="@dimen/posts_avatar_size"-->
+                    <!--                            android:layout_height="@dimen/posts_avatar_size"-->
+                    <!--                            android:layout="@layout/frame_mini_avatar"-->
+                    <!--                            app:layout_constraintStart_toStartOf="parent"-->
+                    <!--                            app:layout_constraintBottom_toBottomOf="parent"/>-->
+                    <!--                        <FrameLayout-->
+                    <!--                            android:id="@+id/av2"-->
+                    <!--                            android:layout_width="@dimen/posts_avatar_size"-->
+                    <!--                            android:layout_height="@dimen/posts_avatar_size"-->
+                    <!--                            app:layout_constraintStart_toStartOf="@id/av1"-->
+                    <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--                            android:layout_marginStart="@dimen/avatar_list_offset"-->
+                    <!--                            android:layout="@layout/frame_mini_avatar" />-->
+                    <!--                        <FrameLayout-->
+                    <!--                            android:id="@+id/av3"-->
+                    <!--                            android:layout_width="@dimen/posts_avatar_size"-->
+                    <!--                            android:layout_height="@dimen/posts_avatar_size"-->
+                    <!--                            app:layout_constraintStart_toStartOf="@id/av2"-->
+                    <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--                            android:layout_marginStart="@dimen/avatar_list_offset"-->
+                    <!--                            android:layout="@layout/frame_mini_avatar" />-->
+                    <!--                        <FrameLayout-->
+                    <!--                            android:id="@+id/av4"-->
+                    <!--                            android:layout_width="@dimen/posts_avatar_size"-->
+                    <!--                            android:layout_height="@dimen/posts_avatar_size"-->
+                    <!--                            app:layout_constraintStart_toStartOf="@id/av3"-->
+                    <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--                            android:layout_marginStart="@dimen/avatar_list_offset"-->
+                    <!--                            android:layout="@layout/frame_mini_avatar" />-->
+                    <!--                        <FrameLayout-->
+                    <!--                            android:id="@+id/av5"-->
+                    <!--                            android:layout_width="@dimen/posts_avatar_size"-->
+                    <!--                            android:layout_height="@dimen/posts_avatar_size"-->
+                    <!--                            app:layout_constraintStart_toStartOf="@id/av4"-->
+                    <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--                            android:layout_marginStart="@dimen/avatar_list_offset"-->
+                    <!--                            android:layout="@layout/frame_mini_avatar" />-->
+                    <!--                        <FrameLayout-->
+                    <!--                            android:id="@+id/av_plus"-->
+                    <!--                            android:layout_width="@dimen/posts_avatar_size"-->
+                    <!--                            android:layout_height="@dimen/posts_avatar_size"-->
+                    <!--                            app:layout_constraintStart_toStartOf="@id/av5"-->
+                    <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--                            android:layout_marginStart="@dimen/avatar_list_offset"-->
+                    <!--                            android:layout="@layout/frame_mini_avatar" />-->
+
+                    <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
                 </LinearLayout>
             </LinearLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/mentionedLayout"
-                android:visibility="gone">
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/mentionedLayout">
 
                 <com.yandex.mapkit.mapview.MapView
                     android:id="@+id/mapview"

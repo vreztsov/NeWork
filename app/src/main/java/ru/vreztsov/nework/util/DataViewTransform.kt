@@ -14,9 +14,8 @@ object DataViewTransform {
         return dateFormat.format(date)
     }
 
-    fun checkLinkFormat(link: String?): Boolean {
-        val input: String = link ?: return false
-        return Patterns.WEB_URL.matcher(input).matches()
-    }
+    fun checkLinkFormat(link: String?): Boolean =
+        link?.let { Patterns.WEB_URL.matcher(it).matches() } ?: false
+
 
 }

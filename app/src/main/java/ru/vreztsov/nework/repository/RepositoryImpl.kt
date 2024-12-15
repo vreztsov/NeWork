@@ -7,19 +7,25 @@ import kotlinx.coroutines.flow.map
 import ru.vreztsov.nework.api.ApiService
 import ru.vreztsov.nework.dao.NeWorkDao
 import ru.vreztsov.nework.dto.Post
+import ru.vreztsov.nework.dto.User
 import ru.vreztsov.nework.entity.PostEntity
+import ru.vreztsov.nework.entity.UserEntity
 import ru.vreztsov.nework.entity.toDto
 import ru.vreztsov.nework.entity.toEntity
 import ru.vreztsov.nework.error.*
 import java.io.IOException
 import javax.inject.Inject
 
-class PostRepositoryImpl @Inject constructor(
+class RepositoryImpl @Inject constructor(
     private val dao: NeWorkDao,
     private val apiService: ApiService,
-) : PostRepository {
+) : Repository {
     override val data: Flow<List<Post>> = dao.getAll()
         .map(List<PostEntity>::toDto)
+        .flowOn(Dispatchers.Default)
+
+    override val dataUsers: Flow<List<User>> = dao.getUsers()
+        .map(List<UserEntity>::toDto)
         .flowOn(Dispatchers.Default)
 
     override suspend fun getAllAsync() {
@@ -30,6 +36,21 @@ class PostRepositoryImpl @Inject constructor(
             }
             val body = response.body() ?: throw UnknownError
             dao.insert(body.toEntity())
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
+    }
+
+    override suspend fun getAllUsersAsync() {
+        try {
+            val response = apiService.getAllUsers()
+            if (!response.isSuccessful) {
+                throw ApiError(response.code(), response.message())
+            }
+            val body = response.body() ?: throw UnknownError
+            dao.insertUsers(body.toEntity())
         } catch (e: IOException) {
             throw NetworkError
         } catch (e: Exception) {
@@ -67,5 +88,10 @@ class PostRepositoryImpl @Inject constructor(
         } catch (e: Exception) {
             throw UnknownError
         }
+    }
+
+    override suspend fun getUserById(id: Long): User? {
+        return dao.getUserById(id)?.toDto()
+        // TODO хз, оно вообще надо
     }
 }

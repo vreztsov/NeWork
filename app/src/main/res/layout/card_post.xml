@@ -18,7 +18,7 @@
             android:padding="@dimen/common_spacing">
 
             <FrameLayout
-                android:id="@+id/avatarFrame"
+                android:id="@+id/avatar_frame"
                 android:layout_width="@dimen/posts_avatar_size"
                 android:layout_height="@dimen/posts_avatar_size"
                 android:layout_marginBottom="@dimen/common_spacing"
@@ -29,7 +29,7 @@
                 >
 
                 <TextView
-                    android:id="@+id/avatarInitial"
+                    android:id="@+id/avatar_initial"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
@@ -58,7 +58,7 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/published"
                 app:layout_constraintEnd_toStartOf="@id/menu"
-                app:layout_constraintStart_toEndOf="@id/avatarFrame"
+                app:layout_constraintStart_toEndOf="@id/avatar_frame"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed"
                 tools:text="@string/test_title" />
@@ -73,7 +73,7 @@
                 android:textSize="@dimen/published_text_size"
                 app:layout_constraintBottom_toBottomOf="@id/header"
                 app:layout_constraintEnd_toStartOf="@id/menu"
-                app:layout_constraintStart_toEndOf="@id/avatarFrame"
+                app:layout_constraintStart_toEndOf="@id/avatar_frame"
                 app:layout_constraintTop_toBottomOf="@id/author"
                 tools:text="@string/test_data_published" />
 
@@ -94,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:visibility="invisible"
                 app:barrierDirection="bottom"
-                app:constraint_referenced_ids="avatarFrame,published,menu" />
+                app:constraint_referenced_ids="avatar_frame,published,menu" />
 
             <TextView
                 android:id="@+id/content"
@@ -122,7 +122,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
-            app:constraint_referenced_ids="attachmentContent" />
+            app:constraint_referenced_ids="attachment_content" />
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/linkBarrier"
@@ -190,14 +190,13 @@
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/attachmentContent"
+            android:id="@+id/attachment_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@+id/barrierVideo">
 
             <ImageView
-                android:id="@+id/imageAttachment"
+                android:id="@+id/image_attachment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/basic_screen_padding"
@@ -210,17 +209,17 @@
                 tools:ignore="MissingConstraints" />
 
             <TextView
-                android:id="@+id/descriptionAttachment"
+                android:id="@+id/description_attachment"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:text="@string/play_audio"
                 android:textSize="@dimen/author_text_size"
-                app:layout_constraintStart_toEndOf="@+id/playButtonPostAudio"
-                app:layout_constraintTop_toBottomOf="@+id/imageAttachment"
+                app:layout_constraintStart_toEndOf="@+id/play_button_post_audio"
+                app:layout_constraintTop_toBottomOf="@+id/image_attachment"
                 tools:ignore="MissingConstraints" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/playButtonPost"
+                android:id="@+id/play_button_post"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
@@ -235,7 +234,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/playButtonPostAudio"
+                android:id="@+id/play_button_post_audio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
@@ -244,14 +243,14 @@
                 android:foregroundTint="@color/white"
                 android:src="@drawable/ic_play_circle"
                 app:backgroundTint="@color/purple_700"
-                app:layout_constraintBottom_toBottomOf="@id/descriptionAttachment"
-                app:layout_constraintEnd_toStartOf="@id/descriptionAttachment"
+                app:layout_constraintBottom_toBottomOf="@id/description_attachment"
+                app:layout_constraintEnd_toStartOf="@id/description_attachment"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/descriptionAttachment" />
+                app:layout_constraintTop_toTopOf="@id/description_attachment" />
 
 
             <VideoView
-                android:id="@+id/videoAttachment"
+                android:id="@+id/video_attachment"
                 android:layout_width="400dp"
                 android:layout_height="225dp"
                 android:visibility="gone"

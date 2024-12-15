@@ -13,6 +13,7 @@ import retrofit2.http.Part
 import retrofit2.http.Path
 import ru.vreztsov.nework.auth.AuthState
 import ru.vreztsov.nework.dto.Post
+import ru.vreztsov.nework.dto.User
 
 interface ApiService {
 
@@ -40,6 +41,9 @@ interface ApiService {
     @GET("posts")
     suspend fun getAll(): Response<List<Post>>
 
+    @GET("users")
+    suspend fun getAllUsers(): Response<List<User>>
+
     @GET("posts/{id}")
     suspend fun getById(@Path("id") id: Long): Response<Post>
 
@@ -48,6 +52,9 @@ interface ApiService {
 
     @DELETE("posts/{id}/likes")
     suspend fun dislikeById(@Path("id") id: Long): Response<Post>
+
+    @GET("users/{id}")
+    suspend fun getUserById(@Path("id") id: Long): Response<User>
 
 
 }

@@ -1,8 +1,9 @@
 package ru.vreztsov.nework.viewmodel
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +15,7 @@ import kotlinx.coroutines.launch
 import ru.vreztsov.nework.auth.AppAuth
 import ru.vreztsov.nework.dto.Post
 import ru.vreztsov.nework.model.PostsModelState
-import ru.vreztsov.nework.repository.PostRepository
+import ru.vreztsov.nework.repository.Repository
 import javax.inject.Inject
 
 private val empty = Post(
@@ -28,9 +29,10 @@ private val empty = Post(
 
 @HiltViewModel
 class PostViewModel @Inject constructor(
-    private val repository: PostRepository,
+    application: Application,
+    private val repository: Repository,
     private val appAuth: AppAuth
-) : ViewModel() {
+) : AndroidViewModel(application) {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val data: LiveData<List<Post>>
@@ -59,10 +61,10 @@ class PostViewModel @Inject constructor(
         get() = _dataState
 
     init {
-        loadPosts()
+        loadData()
     }
 
-    fun loadPosts() = viewModelScope.launch {
+    fun loadData() = viewModelScope.launch {
         try {
             _dataState.value = PostsModelState(loading = true)
             repository.getAllAsync()
@@ -104,6 +106,5 @@ class PostViewModel @Inject constructor(
             _dataState.value = PostsModelState(error = true)
         }
     }
-
 
 }
