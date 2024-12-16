@@ -30,10 +30,12 @@ abstract class AbstractPostOnInteractionListener(
 
     override fun onEdit(post: Post) {
         viewModel.edit(post)
+        //TODO реализовать редактирование
     }
 
     override fun onRemove(post: Post) {
         viewModel.removeById(post.id)
+        //TODO реализовать удаление
     }
 
     override fun onShare(post: Post) {

@@ -26,7 +26,7 @@ data class CoordinatesEmbeddable(
 
     companion object {
         fun fromDto(dto: Coordinates?) = dto?.let {
-            CoordinatesEmbeddable(it.latitude, it.longitude)
+            CoordinatesEmbeddable(it.lat, it.long)
         }
     }
 }

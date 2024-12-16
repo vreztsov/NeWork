@@ -68,4 +68,6 @@
     <string name="registration_415">Invalid photo format</string>
     <string name="chooser_share_post">Share post</string>
     <string name="mentioned">Mentioned</string>
+    <string name="menu_edit">Edit</string>
+    <string name="menu_remove">Remove</string>
 </resources>

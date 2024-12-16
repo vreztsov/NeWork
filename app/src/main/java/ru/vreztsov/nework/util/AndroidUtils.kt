@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.VideoView
@@ -47,7 +48,10 @@ object AndroidUtils {
         warnToast.show()
     }
 
-    fun fillCommonPostViews(view: ViewGroup, post: Post) {
+    fun fillCommonPostViews(
+        view: ViewGroup,
+        post: Post
+    ) {
         with(view) {
             findViewById<TextView>(R.id.author).text = post.author
             findViewById<TextView>(R.id.published).text =
@@ -74,7 +78,8 @@ object AndroidUtils {
             }
             val avatarFrame = findViewById<FrameLayout>(R.id.avatar_frame)
             initAvatar(FrameMiniAvatarBinding.bind(avatarFrame), post.author, post.authorAvatar)
-            findViewById<MaterialButton>(R.id.menu).isVisible = post.ownedByMe
+            val menu = findViewById<MaterialButton>(R.id.menu)
+            menu.isVisible = post.ownedByMe
             val attachmentContent = findViewById<ConstraintLayout>(R.id.attachment_content)
             val imageAttachment = findViewById<ImageView>(R.id.image_attachment)
             if (post.attachment != null) with(post.attachment) {
@@ -106,7 +111,7 @@ object AndroidUtils {
         }
     }
 
-    fun initAvatar(binding: FrameMiniAvatarBinding, name: String, avatarUri: String?){
+    fun initAvatar(binding: FrameMiniAvatarBinding, name: String, avatarUri: String?) {
         val avatarInitial = binding.avatarInitial
         val avatar = binding.avatar
         val avatarFrame = binding.root
@@ -173,6 +178,41 @@ object AndroidUtils {
             playButtonPostAudio.setOnClickListener {
                 listener.onPlayAudio(post, playButtonPostAudio)
             }
+            findViewById<MaterialButton>(R.id.menu).setOnClickListener {
+                PopupMenu(it.context, it).apply {
+                    inflate(R.menu.options_post)
+                    setOnMenuItemClickListener { item ->
+                        when (item.itemId) {
+                            R.id.remove -> {
+                                listener.onRemove(post)
+                                true
+                            }
+
+                            R.id.edit -> {
+                                listener.onEdit(post)
+                                true
+                            }
+
+                            else -> false
+                        }
+                    }
+                }
+            }
         }
+    }
+
+    fun withCoordinates(
+        post: Post?,
+        receiver: (latitude: Double, longitude: Double) -> Unit
+    ): Unit? {
+        post?.coords?.let {
+            val ltt = it.lat?.toDoubleOrNull()
+            val lgt = it.long?.toDoubleOrNull()
+            if (ltt != null && lgt != null) {
+                receiver(ltt, lgt)
+                return Unit
+            }
+        }
+        return null
     }
 }

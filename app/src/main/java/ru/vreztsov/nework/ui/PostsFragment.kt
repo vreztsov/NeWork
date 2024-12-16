@@ -26,7 +26,6 @@ class PostsFragment : Fragment() {
     private lateinit var adapter: PostsAdapter
     private val viewModel: PostViewModel by activityViewModels()
     private val mediaPlayer = MediaPlayer()
-    //TODO приделай меню для правки своих постов
     //TODO не забудь про создание нового поста
     //TODO про обновление страницы и пагинацию тоже подумай
 

@@ -12,6 +12,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.yandex.mapkit.MapKitFactory
+import com.yandex.mapkit.geometry.Point
+import com.yandex.mapkit.map.CameraPosition
+import com.yandex.mapkit.map.Map
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.vreztsov.nework.R
@@ -22,6 +26,7 @@ import ru.vreztsov.nework.dto.Post
 import ru.vreztsov.nework.dto.User
 import ru.vreztsov.nework.util.AndroidUtils.fillCommonPostViews
 import ru.vreztsov.nework.util.AndroidUtils.setCommonPostListeners
+import ru.vreztsov.nework.util.AndroidUtils.withCoordinates
 import ru.vreztsov.nework.util.BundleArguments.Companion.post
 import ru.vreztsov.nework.util.BundleArguments.Companion.userId
 import ru.vreztsov.nework.util.BundleArguments.Companion.userIdList
@@ -38,6 +43,7 @@ class DetailedPostFragment : Fragment() {
     private lateinit var likeAdapter: AvatarAdapter
     private lateinit var mensionAdapter: AvatarAdapter
     private var post: Post? = null
+    private lateinit var map: Map
 
 
     override fun onCreateView(
@@ -57,6 +63,17 @@ class DetailedPostFragment : Fragment() {
             mension.isCheckable = true
             mension.isClickable = false
             fillCommonPostViews(view, post)
+            withCoordinates(post) { latitude, longitude ->
+                mapContainer.visibility = View.VISIBLE
+                mapContainer.layoutParams.apply { height = width / 20}
+                map = mapview.mapWindow.map
+                val zoomMap = 12.0f
+                map.move(
+                    CameraPosition(
+                        Point(latitude, longitude), zoomMap, 0f, 0f
+                    )
+                )
+            } ?: let { mapContainer.visibility = View.GONE }
             val onInteractionListener = object : AvatarsOnInteractionListener {
 
                 override fun onAvatarClick() {
@@ -65,9 +82,10 @@ class DetailedPostFragment : Fragment() {
                     )
                     //TODO реализовать userFragment
                 }
+
                 override fun onPlusClick(userList: List<User>) {
                     findNavController().navigate(R.id.action_detailedPostFragment_to_userFragment,
-                        Bundle().apply { userIdList = userList.map { it.id }}
+                        Bundle().apply { userIdList = userList.map { it.id } }
                     )
                     //TODO реализовать userFragment
                 }
@@ -108,5 +126,19 @@ class DetailedPostFragment : Fragment() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        withCoordinates(this.post) { _, _ ->
+            MapKitFactory.getInstance().onStart()
+            binding.mapview.onStart()
+        }
+    }
 
+    override fun onStop() {
+        withCoordinates(this.post) { _, _ ->
+            binding.mapview.onStop()
+            MapKitFactory.getInstance().onStop()
+        }
+        super.onStop()
+    }
 }

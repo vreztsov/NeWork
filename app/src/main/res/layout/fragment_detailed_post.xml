@@ -24,9 +24,10 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -37,17 +38,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="@dimen/common_spacing">
-
-                <!--                <ImageView-->
-                <!--                    android:id="@+id/avatarFrame"-->
-                <!--                    android:layout_width="@dimen/posts_avatar_size"-->
-                <!--                    android:layout_height="@dimen/posts_avatar_size"-->
-                <!--                    android:layout_marginBottom="@dimen/common_spacing"-->
-                <!--                    android:contentDescription="@string/description_author_avatar"-->
-                <!--                    app:layout_constraintBottom_toBottomOf="@id/header"-->
-                <!--                    app:layout_constraintStart_toStartOf="parent"-->
-                <!--                    app:layout_constraintTop_toTopOf="parent"-->
-                <!--                    tools:srcCompat="@drawable/netology_foreground" />-->
 
                 <FrameLayout
                     android:id="@+id/avatar_frame"
@@ -350,8 +340,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="4dp">
+                    android:layout_marginTop="4dp"
+                    android:orientation="horizontal">
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/mension"
@@ -373,74 +363,20 @@
                         android:orientation="horizontal"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/frame_mini_avatar" />
-
-                    <!--                    <androidx.constraintlayout.widget.ConstraintLayout-->
-                    <!--                        android:id="@+id/mensioned_list"-->
-                    <!--                        android:layout_width="match_parent"-->
-                    <!--                        android:layout_height="wrap_content"-->
-                    <!--                        android:layout_marginTop="4dp">-->
-                    <!--                        <FrameLayout-->
-                    <!--                            android:id="@+id/av1"-->
-                    <!--                            android:layout_width="@dimen/posts_avatar_size"-->
-                    <!--                            android:layout_height="@dimen/posts_avatar_size"-->
-                    <!--                            android:layout="@layout/frame_mini_avatar"-->
-                    <!--                            app:layout_constraintStart_toStartOf="parent"-->
-                    <!--                            app:layout_constraintBottom_toBottomOf="parent"/>-->
-                    <!--                        <FrameLayout-->
-                    <!--                            android:id="@+id/av2"-->
-                    <!--                            android:layout_width="@dimen/posts_avatar_size"-->
-                    <!--                            android:layout_height="@dimen/posts_avatar_size"-->
-                    <!--                            app:layout_constraintStart_toStartOf="@id/av1"-->
-                    <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
-                    <!--                            android:layout_marginStart="@dimen/avatar_list_offset"-->
-                    <!--                            android:layout="@layout/frame_mini_avatar" />-->
-                    <!--                        <FrameLayout-->
-                    <!--                            android:id="@+id/av3"-->
-                    <!--                            android:layout_width="@dimen/posts_avatar_size"-->
-                    <!--                            android:layout_height="@dimen/posts_avatar_size"-->
-                    <!--                            app:layout_constraintStart_toStartOf="@id/av2"-->
-                    <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
-                    <!--                            android:layout_marginStart="@dimen/avatar_list_offset"-->
-                    <!--                            android:layout="@layout/frame_mini_avatar" />-->
-                    <!--                        <FrameLayout-->
-                    <!--                            android:id="@+id/av4"-->
-                    <!--                            android:layout_width="@dimen/posts_avatar_size"-->
-                    <!--                            android:layout_height="@dimen/posts_avatar_size"-->
-                    <!--                            app:layout_constraintStart_toStartOf="@id/av3"-->
-                    <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
-                    <!--                            android:layout_marginStart="@dimen/avatar_list_offset"-->
-                    <!--                            android:layout="@layout/frame_mini_avatar" />-->
-                    <!--                        <FrameLayout-->
-                    <!--                            android:id="@+id/av5"-->
-                    <!--                            android:layout_width="@dimen/posts_avatar_size"-->
-                    <!--                            android:layout_height="@dimen/posts_avatar_size"-->
-                    <!--                            app:layout_constraintStart_toStartOf="@id/av4"-->
-                    <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
-                    <!--                            android:layout_marginStart="@dimen/avatar_list_offset"-->
-                    <!--                            android:layout="@layout/frame_mini_avatar" />-->
-                    <!--                        <FrameLayout-->
-                    <!--                            android:id="@+id/av_plus"-->
-                    <!--                            android:layout_width="@dimen/posts_avatar_size"-->
-                    <!--                            android:layout_height="@dimen/posts_avatar_size"-->
-                    <!--                            app:layout_constraintStart_toStartOf="@id/av5"-->
-                    <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
-                    <!--                            android:layout_marginStart="@dimen/avatar_list_offset"-->
-                    <!--                            android:layout="@layout/frame_mini_avatar" />-->
-
-                    <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
                 </LinearLayout>
             </LinearLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/map_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@id/mentionedLayout">
 
                 <com.yandex.mapkit.mapview.MapView
                     android:id="@+id/mapview"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="200dp"
+                    app:layout_constraintTop_toTopOf="parent"/>
 
                 <ImageView
                     android:id="@+id/point"
@@ -448,13 +384,13 @@
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/set_location"
                     android:src="@drawable/ic_outline_add_location_24"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintBottom_toBottomOf="@id/mapview"
+                    app:layout_constraintEnd_toEndOf="@id/mapview"
+                    app:layout_constraintStart_toStartOf="@id/mapview"
+                    app:layout_constraintTop_toTopOf="@id/mapview" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>
