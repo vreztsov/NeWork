@@ -8,12 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.google.gson.Gson
 import ru.vreztsov.nework.R
 import ru.vreztsov.nework.adapter.PostsAdapter
 import ru.vreztsov.nework.databinding.FragmentPostsBinding
 import ru.vreztsov.nework.dto.Post
-import ru.vreztsov.nework.util.BundleArguments.Companion.postAsJson
+import ru.vreztsov.nework.util.BundleArguments.Companion.post
 import ru.vreztsov.nework.util.goToLogin
 import ru.vreztsov.nework.util.listener.AbstractPostOnInteractionListener
 import ru.vreztsov.nework.util.setBottomNavigationViewListener
@@ -30,7 +29,6 @@ class PostsFragment : Fragment() {
     //TODO приделай меню для правки своих постов
     //TODO не забудь про создание нового поста
     //TODO про обновление страницы и пагинацию тоже подумай
-    //TODO переход на развёрнутую страницу поста
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,7 +51,7 @@ class PostsFragment : Fragment() {
                 findNavController().navigate(
                     R.id.action_postsFragment_to_detailedPostFragment,
                     Bundle().apply {
-                        postAsJson = Gson().toJson(post)
+                        this.post = post
                     }
                 )
             }

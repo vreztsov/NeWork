@@ -11,7 +11,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
-import com.google.gson.Gson
+import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.vreztsov.nework.R
@@ -19,9 +19,12 @@ import ru.vreztsov.nework.adapter.AvatarAdapter
 import ru.vreztsov.nework.adapter.AvatarsOnInteractionListener
 import ru.vreztsov.nework.databinding.FragmentDetailedPostBinding
 import ru.vreztsov.nework.dto.Post
+import ru.vreztsov.nework.dto.User
 import ru.vreztsov.nework.util.AndroidUtils.fillCommonPostViews
 import ru.vreztsov.nework.util.AndroidUtils.setCommonPostListeners
-import ru.vreztsov.nework.util.BundleArguments.Companion.postAsJson
+import ru.vreztsov.nework.util.BundleArguments.Companion.post
+import ru.vreztsov.nework.util.BundleArguments.Companion.userId
+import ru.vreztsov.nework.util.BundleArguments.Companion.userIdList
 import ru.vreztsov.nework.util.listener.AbstractPostOnInteractionListener
 import ru.vreztsov.nework.viewmodel.PostViewModel
 import ru.vreztsov.nework.viewmodel.UserViewModel
@@ -43,9 +46,7 @@ class DetailedPostFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentDetailedPostBinding.inflate(inflater, container, false)
-        post = arguments?.postAsJson?.let {
-            Gson().fromJson(it, Post::class.java)
-        }?.also {
+        post = arguments?.post?.also {
             bind(binding.root, it)
         }
         return binding.root
@@ -57,12 +58,18 @@ class DetailedPostFragment : Fragment() {
             mension.isClickable = false
             fillCommonPostViews(view, post)
             val onInteractionListener = object : AvatarsOnInteractionListener {
+
                 override fun onAvatarClick() {
-
+                    findNavController().navigate(R.id.action_detailedPostFragment_to_userFragment,
+                        Bundle().apply { userId = post.authorId }
+                    )
+                    //TODO реализовать userFragment
                 }
-
-                override fun onPlusClick() {
-
+                override fun onPlusClick(userList: List<User>) {
+                    findNavController().navigate(R.id.action_detailedPostFragment_to_userFragment,
+                        Bundle().apply { userIdList = userList.map { it.id }}
+                    )
+                    //TODO реализовать userFragment
                 }
             }
             likeAdapter = AvatarAdapter(onInteractionListener)

@@ -41,12 +41,26 @@
         android:id="@+id/detailedPostFragment"
         android:name="ru.vreztsov.nework.ui.DetailedPostFragment"
         android:label="fragment_detailed_post"
-        tools:layout="@layout/fragment_detailed_post" />
+        tools:layout="@layout/fragment_detailed_post" >
+        <action
+            android:id="@+id/action_detailedPostFragment_to_userFragment"
+            app:destination="@id/userFragment" />
+        <action
+            android:id="@+id/action_detailedPostFragment_to_usersFragment"
+            app:destination="@id/usersFragment" />
+    </fragment>
     <fragment
         android:id="@+id/detailedEventFragment"
         android:name="ru.vreztsov.nework.ui.DetailedEventFragment"
         android:label="fragment_detailed_event"
-        tools:layout="@layout/fragment_detailed_event" />
+        tools:layout="@layout/fragment_detailed_event" >
+        <action
+            android:id="@+id/action_detailedEventFragment_to_userFragment"
+            app:destination="@id/userFragment" />
+        <action
+            android:id="@+id/action_detailedEventFragment_to_usersFragment"
+            app:destination="@id/usersFragment" />
+    </fragment>
     <fragment
         android:id="@+id/postsFragment"
         android:name="ru.vreztsov.nework.ui.PostsFragment"
@@ -107,4 +121,9 @@
             android:id="@+id/action_usersFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="ru.vreztsov.nework.ui.UserFragment"
+        android:label="fragment_user"
+        tools:layout="@layout/fragment_user" />
 </navigation>

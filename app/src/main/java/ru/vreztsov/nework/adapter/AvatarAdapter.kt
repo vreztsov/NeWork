@@ -12,17 +12,19 @@ import ru.vreztsov.nework.util.AndroidUtils.MAX_AVATARS_LIST_SIZE
 
 interface AvatarsOnInteractionListener {
     fun onAvatarClick()
-    fun onPlusClick()
+    fun onPlusClick(userList: List<User>)
 }
 
 class AvatarAdapter(
     private val onInteractionListener: AvatarsOnInteractionListener
 ) : ListAdapter<User, UserViewHolder>(UserDiffCallback()) {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return UserViewHolder(
             FrameMiniAvatarBinding.inflate(layoutInflater, parent, false),
-            onInteractionListener
+            onInteractionListener,
+            currentList
         )
 
     }
@@ -43,7 +45,8 @@ class AvatarAdapter(
 
 class UserViewHolder(
     private val binding: FrameMiniAvatarBinding,
-    private val onInteractionListener: AvatarsOnInteractionListener
+    private val onInteractionListener: AvatarsOnInteractionListener,
+    private val adapterList: List<User>
 ) : ViewHolder(binding.root) {
     fun bind(user: User, position: Int) {
         when (position) {
@@ -57,7 +60,7 @@ class UserViewHolder(
             MAX_AVATARS_LIST_SIZE -> {
                 AndroidUtils.initAvatar(binding, "+", null)
                 binding.avatar.setOnClickListener {
-                    onInteractionListener.onPlusClick()
+                    onInteractionListener.onPlusClick(adapterList)
                 }
             }
             else -> return
