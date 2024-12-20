@@ -14,6 +14,7 @@ import ru.vreztsov.nework.util.listener.UserOnInteractionListener
 
 class UsersAdapter(
     private val isSelectable: Boolean,
+    private val selectedUserIdList: List<Long>? = null,
     private val onInteractionListener: UserOnInteractionListener
 ) : ListAdapter<User, UserViewHolder>(UserDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
@@ -21,6 +22,7 @@ class UsersAdapter(
         return UserViewHolder(
             CardUserBinding.inflate(layoutInflater, parent, false),
             isSelectable,
+            selectedUserIdList,
             onInteractionListener
         )
     }
@@ -36,12 +38,16 @@ class UsersAdapter(
 class UserViewHolder(
     private val binding: CardUserBinding,
     private val isSelectable: Boolean,
+    private val selectedUserIdList: List<Long>? = null,
     private val onInteractionListener: UserOnInteractionListener
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(user: User) {
         with(binding){
             userSelected.isVisible = isSelectable
+            if (isSelectable) selectedUserIdList?.let {list ->
+                userSelected.isChecked = list.contains(user.id)
+            }
             name.text = user.name
             login.text = user.login
             initAvatar(FrameMiniAvatarBinding.bind(avatarFrame), user.name, user.avatar)

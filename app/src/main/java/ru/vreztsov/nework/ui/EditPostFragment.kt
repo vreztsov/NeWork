@@ -19,12 +19,12 @@ import com.github.dhaval2404.imagepicker.constant.ImageProvider
 import com.google.android.material.snackbar.Snackbar
 import ru.vreztsov.nework.R
 import ru.vreztsov.nework.databinding.FragmentEditPostBinding
-import ru.vreztsov.nework.dto.Attachment
 import ru.vreztsov.nework.dto.AttachmentType
 import ru.vreztsov.nework.util.AndroidUtils
 import ru.vreztsov.nework.util.AndroidUtils.getExtensionFromUri
 import ru.vreztsov.nework.util.BundleArguments.Companion.editType
 import ru.vreztsov.nework.util.BundleArguments.Companion.post
+import ru.vreztsov.nework.util.BundleArguments.Companion.userIdList
 import ru.vreztsov.nework.util.BundleArguments.Companion.userWallType
 import ru.vreztsov.nework.util.EditType
 import ru.vreztsov.nework.util.UserWallType
@@ -179,6 +179,7 @@ class EditPostFragment : Fragment() {
                                 viewModel.changeMedia(uri, file, t)
                             }
                             inputStream?.close()
+                            attachmentSelector.isVisible = false
                         }
                     }
                 }
@@ -208,7 +209,10 @@ class EditPostFragment : Fragment() {
                     R.id.tag_users -> {
                         findNavController().navigate(R.id.action_editPostFragment_to_userWallFragment,
                             Bundle().apply
-                            { userWallType = UserWallType.USERS_CHOOSING})
+                            {
+                                userWallType = UserWallType.USERS_CHOOSING
+                                userIdList = arguments?.post?.mentionIds
+                            })
                         true
                     }
 

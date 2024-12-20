@@ -31,7 +31,7 @@ class UserWallFragment : Fragment() {
     private lateinit var binding: FragmentUserWallBinding
     private lateinit var adapter: UsersAdapter
     private var isSelectable = false
-    private val userMap: MutableMap<User, Boolean> = hashMapOf()
+    private val userMap: MutableMap<Long, Boolean> = hashMapOf()
     val viewModel: UserViewModel by activityViewModels()
 
 
@@ -44,15 +44,18 @@ class UserWallFragment : Fragment() {
         arguments?.userWallType?.let { userWallType ->
             when (userWallType) {
                 USERS_CHOOSING -> {
+                    arguments?.userIdList?.let {
+                        it.forEach { id -> userMap[id] = true }
+                    }
                     val listener = object : UserOnInteractionListener {
                         override fun onClick(user: User) {
                         }
 
                         override fun onSelect(user: User, isChecked: Boolean) {
-                            userMap[user] = isChecked
+                            userMap[user.id] = isChecked
                         }
                     }
-                    adapter = UsersAdapter(true, listener)
+                    adapter = UsersAdapter(true, arguments?.userIdList, listener)
                     binding.wall.adapter = adapter
                     lifecycleScope.launch {
                         viewModel.dataUsersList.collectLatest {
@@ -74,6 +77,7 @@ class UserWallFragment : Fragment() {
                                     findNavController().navigateUp()
                                     true
                                 }
+
                                 else -> false
                             }
                     })
@@ -91,7 +95,7 @@ class UserWallFragment : Fragment() {
                         override fun onSelect(user: User, isChecked: Boolean) {
                         }
                     }
-                    adapter = UsersAdapter(false, listener)
+                    adapter = UsersAdapter(isSelectable = false, onInteractionListener = listener)
                     binding.wall.adapter = adapter
                     arguments?.userIdList?.let { list ->
                         lifecycleScope.launch {

@@ -27,8 +27,8 @@ class UserViewModel @Inject constructor(
     val dataUsersList
         get() = flow {
 //            while (true) {
-                getData()
-                emit(_dataUsersList)
+            getData()
+            emit(_dataUsersList)
 //                delay(10_000)
 //            }
         }
@@ -56,7 +56,12 @@ class UserViewModel @Inject constructor(
     }
 
     fun getUserById(id: Long): User? = _dataUsersList.find { it.id == id }
-    fun saveSelected(list: List<User>) {
-        _selectedUsersList.value = list
+//    fun saveSelected(list: List<User>) {
+//        _selectedUsersList.value = list
+//    }
+
+    fun saveSelected(list: List<Long>) {
+        val userList = list.mapNotNull { id -> _dataUsersList.find { it.id == id } }
+        _selectedUsersList.value = userList
     }
 }

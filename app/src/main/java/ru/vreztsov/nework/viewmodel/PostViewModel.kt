@@ -7,10 +7,8 @@ import androidx.core.net.toUri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -121,6 +119,8 @@ class PostViewModel @Inject constructor(
 
     fun edit(post: Post) {
         edited.value = post
+        // при случае поставь в модель аттачмент редактируемого поста.
+    // Осторожнее с файлом в _media - он может быть только локальным.
     }
 
     fun likeById(id: Long) = viewModelScope.launch {

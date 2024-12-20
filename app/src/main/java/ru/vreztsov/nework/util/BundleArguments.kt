@@ -14,6 +14,7 @@ class BundleArguments {
 
     companion object {
         private val gson: Gson = Gson()
+
         var Bundle.editType: EditType?
             set(value) = putString(EDIT_TITLE, value.toString())
             get() = getString(EDIT_TITLE)?.let {
