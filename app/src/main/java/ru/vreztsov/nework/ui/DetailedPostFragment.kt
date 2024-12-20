@@ -20,13 +20,13 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.vreztsov.nework.R
 import ru.vreztsov.nework.adapter.AvatarAdapter
-import ru.vreztsov.nework.adapter.AvatarsOnInteractionListener
+import ru.vreztsov.nework.adapter.AvatarOnInteractionListener
 import ru.vreztsov.nework.databinding.FragmentDetailedPostBinding
 import ru.vreztsov.nework.dto.Post
 import ru.vreztsov.nework.dto.User
-import ru.vreztsov.nework.util.AndroidUtils.fillCommonPostViews
-import ru.vreztsov.nework.util.AndroidUtils.setCommonPostListeners
 import ru.vreztsov.nework.util.AndroidUtils.withCoordinates
+import ru.vreztsov.nework.util.BindingUtils.fillCommonPostViews
+import ru.vreztsov.nework.util.BindingUtils.setCommonPostListeners
 import ru.vreztsov.nework.util.BundleArguments.Companion.post
 import ru.vreztsov.nework.util.BundleArguments.Companion.userId
 import ru.vreztsov.nework.util.BundleArguments.Companion.userIdList
@@ -74,7 +74,7 @@ class DetailedPostFragment : Fragment() {
                     )
                 )
             } ?: let { mapContainer.visibility = View.GONE }
-            val onInteractionListener = object : AvatarsOnInteractionListener {
+            val onInteractionListener = object : AvatarOnInteractionListener {
 
                 override fun onAvatarClick() {
                     findNavController().navigate(R.id.action_detailedPostFragment_to_userFragment,
@@ -84,10 +84,9 @@ class DetailedPostFragment : Fragment() {
                 }
 
                 override fun onPlusClick(userList: List<User>) {
-                    findNavController().navigate(R.id.action_detailedPostFragment_to_userFragment,
+                    findNavController().navigate(R.id.action_detailedPostFragment_to_userWallFragment,
                         Bundle().apply { userIdList = userList.map { it.id } }
                     )
-                    //TODO реализовать userFragment
                 }
             }
             likeAdapter = AvatarAdapter(onInteractionListener)

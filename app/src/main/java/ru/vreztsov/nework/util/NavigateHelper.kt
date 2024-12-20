@@ -1,14 +1,19 @@
 package ru.vreztsov.nework.util
 
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ru.vreztsov.nework.R
+import ru.vreztsov.nework.dto.Post
+import ru.vreztsov.nework.ui.DetailedPostFragment
 import ru.vreztsov.nework.ui.EventsFragment
 import ru.vreztsov.nework.ui.PostsFragment
 import ru.vreztsov.nework.ui.UsersFragment
+import ru.vreztsov.nework.util.BundleArguments.Companion.editType
+import ru.vreztsov.nework.util.BundleArguments.Companion.post
 
 fun goToLogin(startFragment: Fragment) {
     val actionFromTo = when {
@@ -17,6 +22,21 @@ fun goToLogin(startFragment: Fragment) {
     }
     actionFromTo?.let {
         startFragment.findNavController().navigate(it)
+    }
+}
+
+fun goToPostEditing(startFragment: Fragment, post: Post){
+    val bundle = Bundle().apply {
+        this.editType = EditType.EDIT_POST
+        this.post = post
+    }
+    val actionFromTo = when (startFragment) {
+        is PostsFragment -> R.id.action_postsFragment_to_editPostFragment
+        is DetailedPostFragment -> R.id.action_detailedPostFragment_to_editPostFragment
+        else -> null
+    }
+    actionFromTo?.let {
+        startFragment.findNavController().navigate(it, bundle)
     }
 }
 

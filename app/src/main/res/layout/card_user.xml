@@ -5,23 +5,39 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/shape_card"
-    app:cardCornerRadius="@dimen/basic_screen_padding"
-    >
+    app:cardCornerRadius="@dimen/basic_screen_padding">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/basic_screen_padding">
 
-        <ImageView
-            android:id="@+id/avatar"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+        <FrameLayout
+            android:id="@+id/avatar_frame"
+            android:layout_width="@dimen/posts_avatar_size"
+            android:layout_height="@dimen/posts_avatar_size"
+            android:layout_marginBottom="@dimen/common_spacing"
+            android:contentDescription="@string/description_author_avatar"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:src="@drawable/netology_foreground"
-            android:contentDescription="@string/description_author_avatar" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/avatar_initial"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/avatar_text_size" />
+
+            <ImageView
+                android:id="@+id/avatar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/description_author_avatar"
+                tools:src="@drawable/netology_foreground" />
+        </FrameLayout>
+
 
         <TextView
             android:id="@+id/name"
@@ -34,8 +50,8 @@
             android:textSize="@dimen/author_text_size"
             android:textStyle="bold"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/avatar"
-            app:layout_constraintTop_toTopOf="@+id/avatar"
+            app:layout_constraintStart_toEndOf="@+id/avatar_frame"
+            app:layout_constraintTop_toTopOf="@+id/avatar_frame"
             tools:text="@string/prompt_name" />
 
         <TextView
@@ -47,9 +63,20 @@
             android:ellipsize="end"
             android:singleLine="true"
             android:textSize="@dimen/edit_text_size"
-            app:layout_constraintBottom_toBottomOf="@+id/avatar"
-            app:layout_constraintStart_toEndOf="@+id/avatar"
+            app:layout_constraintBottom_toBottomOf="@+id/avatar_frame"
+            app:layout_constraintStart_toEndOf="@+id/avatar_frame"
             tools:text="@string/prompt_login" />
+
+        <CheckBox
+            android:id="@+id/user_selected"
+            android:layout_width="@dimen/posts_avatar_size"
+            android:layout_height="@dimen/posts_avatar_size"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TouchTargetSizeCheck" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

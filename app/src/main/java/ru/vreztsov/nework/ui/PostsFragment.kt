@@ -5,14 +5,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import ru.vreztsov.nework.R
 import ru.vreztsov.nework.adapter.PostsAdapter
 import ru.vreztsov.nework.databinding.FragmentPostsBinding
 import ru.vreztsov.nework.dto.Post
+import ru.vreztsov.nework.util.BundleArguments.Companion.editType
 import ru.vreztsov.nework.util.BundleArguments.Companion.post
+import ru.vreztsov.nework.util.EditType
 import ru.vreztsov.nework.util.goToLogin
 import ru.vreztsov.nework.util.listener.AbstractPostOnInteractionListener
 import ru.vreztsov.nework.util.setBottomNavigationViewListener
@@ -58,22 +67,37 @@ class PostsFragment : Fragment() {
     )
 
     private fun subscribe() {
-        viewModel.data.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.CREATED){
+                viewModel.data.collectLatest {
+                    adapter.submitList(it)
+                }
+            }
         }
-
         viewModel.dataState.observe(viewLifecycleOwner) { state ->
-            // TODO пока пусто
+            when {
+                state.error -> {
+                    Snackbar.make(binding.root, R.string.error_loading, Snackbar.LENGTH_LONG)
+                        .setAction(R.string.retry_loading) { viewModel.loadData() }
+                        .show()
+                }
+                state.idle -> {
+                    Toast.makeText(context, R.string.on_success, Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 
     private fun setListeners() {
         binding.topAppBar.setTopAppBarListener(this, viewModel.isAuthorized)
         binding.bottomNavigation.setBottomNavigationViewListener(this)
-//        binding.bottomNavigation.selectedItemId = R.id.item_events
         binding.addNewPost.setOnClickListener {
             if (viewModel.isAuthorized) {
-                //TODO переход к созданию нового поста
+                findNavController().navigate(
+                    R.id.action_postsFragment_to_editPostFragment,
+                    Bundle().apply {
+                        editType = EditType.NEW_POST
+                    })
             } else {
                 goToLogin(this)
             }

@@ -60,11 +60,11 @@
         app:layout_constraintTop_toBottomOf="@id/tabs"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/userContent"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            tools:layout="@layout/fragment_user_wall"/>
+<!--        <androidx.fragment.app.FragmentContainerView-->
+<!--            android:id="@+id/userContent"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0dp"-->
+<!--            tools:layout="@layout/fragment_user_wall"/>-->
 
     </androidx.core.widget.NestedScrollView>
 

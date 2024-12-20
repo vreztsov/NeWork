@@ -4,7 +4,7 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ru.vreztsov.nework.dto.Post
-import ru.vreztsov.nework.util.EntityListManager
+import ru.vreztsov.nework.util.EntityCollectionManager
 
 @Entity
 data class PostEntity(
@@ -21,6 +21,7 @@ data class PostEntity(
     val likeOwnerIdList: String,
     val mentionedIdList: String,
     val link: String? = null,
+    val users: String,
     @Embedded
     val attachment: AttachmentEmbeddable? = null,
     @Embedded
@@ -35,11 +36,12 @@ data class PostEntity(
         content = content,
         published = published,
         likedByMe = likedByMe,
-        likeOwnerIds = EntityListManager.stringToDtoList(likeOwnerIdList),
-        mentionIds = EntityListManager.stringToDtoList(mentionedIdList),
+        likeOwnerIds = EntityCollectionManager.stringToDtoList(likeOwnerIdList),
+        mentionIds = EntityCollectionManager.stringToDtoList(mentionedIdList),
         link = link,
         attachment = attachment?.toDto(),
-        coords = coords?.toDto()
+        coords = coords?.toDto(),
+        users = EntityCollectionManager.stringToDtoUserPreviewMap(users)
     )
 
     companion object {
@@ -51,13 +53,14 @@ data class PostEntity(
             authorJob = dto.authorJob,
             content = dto.content,
             published = dto.published,
-            likes = dto.likeOwnerIds?.size ?: 0,
+            likes = dto.likeOwnerIds.size,
             likedByMe = dto.likedByMe,
-            likeOwnerIdList = EntityListManager.dtoListToString(dto.likeOwnerIds),
-            mentionedIdList = EntityListManager.dtoListToString(dto.mentionIds),
+            likeOwnerIdList = EntityCollectionManager.dtoListToString(dto.likeOwnerIds),
+            mentionedIdList = EntityCollectionManager.dtoListToString(dto.mentionIds),
             link = dto.link,
             attachment = AttachmentEmbeddable.fromDto(dto.attachment),
             coords = CoordinatesEmbeddable.fromDto(dto.coords),
+            users = EntityCollectionManager.dtoMapToString(dto.users)
         )
     }
 }

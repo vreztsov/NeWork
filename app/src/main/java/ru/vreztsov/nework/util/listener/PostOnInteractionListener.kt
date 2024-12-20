@@ -4,7 +4,7 @@ import android.widget.ImageButton
 import android.widget.VideoView
 import ru.vreztsov.nework.dto.Post
 
-interface PostsOnInteractionListener {
+interface PostOnInteractionListener {
     fun onLike(post: Post)
     fun onEdit(post: Post)
     fun onRemove(post: Post)

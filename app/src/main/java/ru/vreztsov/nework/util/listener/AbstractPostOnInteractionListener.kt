@@ -9,17 +9,20 @@ import android.widget.MediaController
 import android.widget.VideoView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import ru.vreztsov.nework.R
 import ru.vreztsov.nework.dto.AttachmentType
 import ru.vreztsov.nework.dto.Post
+import ru.vreztsov.nework.ui.DetailedPostFragment
 import ru.vreztsov.nework.util.goToLogin
+import ru.vreztsov.nework.util.goToPostEditing
 import ru.vreztsov.nework.viewmodel.PostViewModel
 
 abstract class AbstractPostOnInteractionListener(
     private val fragment: Fragment,
     private val viewModel: PostViewModel,
     private val mediaPlayer: MediaPlayer
-): PostsOnInteractionListener {
+): PostOnInteractionListener {
     override fun onLike(post: Post) {
         if (!viewModel.isAuthorized) {
             goToLogin(fragment)
@@ -29,12 +32,15 @@ abstract class AbstractPostOnInteractionListener(
     }
 
     override fun onEdit(post: Post) {
+        goToPostEditing(fragment, post)
         viewModel.edit(post)
-        //TODO реализовать редактирование
     }
 
     override fun onRemove(post: Post) {
         viewModel.removeById(post.id)
+        if (fragment is DetailedPostFragment) {
+            fragment.findNavController().navigateUp()
+        }
         //TODO реализовать удаление
     }
 

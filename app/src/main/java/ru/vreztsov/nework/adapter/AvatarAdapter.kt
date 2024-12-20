@@ -7,21 +7,21 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import ru.vreztsov.nework.databinding.FrameMiniAvatarBinding
 import ru.vreztsov.nework.dto.User
-import ru.vreztsov.nework.util.AndroidUtils
 import ru.vreztsov.nework.util.AndroidUtils.MAX_AVATARS_LIST_SIZE
+import ru.vreztsov.nework.util.BindingUtils.initAvatar
 
-interface AvatarsOnInteractionListener {
+interface AvatarOnInteractionListener {
     fun onAvatarClick()
     fun onPlusClick(userList: List<User>)
 }
 
 class AvatarAdapter(
-    private val onInteractionListener: AvatarsOnInteractionListener
-) : ListAdapter<User, UserViewHolder>(UserDiffCallback()) {
+    private val onInteractionListener: AvatarOnInteractionListener
+) : ListAdapter<User, AvatarViewHolder>(UserDiffCallback()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AvatarViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return UserViewHolder(
+        return AvatarViewHolder(
             FrameMiniAvatarBinding.inflate(layoutInflater, parent, false),
             onInteractionListener,
             currentList
@@ -29,7 +29,7 @@ class AvatarAdapter(
 
     }
 
-    override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: AvatarViewHolder, position: Int) {
         getItem(position)?.let { user -> holder.bind(user, position) }
     }
 
@@ -43,22 +43,22 @@ class AvatarAdapter(
     }
 }
 
-class UserViewHolder(
+class AvatarViewHolder(
     private val binding: FrameMiniAvatarBinding,
-    private val onInteractionListener: AvatarsOnInteractionListener,
+    private val onInteractionListener: AvatarOnInteractionListener,
     private val adapterList: List<User>
 ) : ViewHolder(binding.root) {
     fun bind(user: User, position: Int) {
         when (position) {
             in 0 until MAX_AVATARS_LIST_SIZE -> {
-                AndroidUtils.initAvatar(binding, user.name, user.avatar)
+                initAvatar(binding, user.name, user.avatar)
                 binding.avatar.setOnClickListener {
                     onInteractionListener.onAvatarClick()
                 }
             }
 
             MAX_AVATARS_LIST_SIZE -> {
-                AndroidUtils.initAvatar(binding, "+", null)
+                initAvatar(binding, "+", null)
                 binding.avatar.setOnClickListener {
                     onInteractionListener.onPlusClick(adapterList)
                 }

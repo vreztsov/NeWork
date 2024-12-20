@@ -23,6 +23,9 @@ interface NeWorkDao {
     suspend fun insert(posts: List<PostEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(posts: PostEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUsers(posts: List<UserEntity>)
 
     @Query("""
@@ -32,4 +35,6 @@ interface NeWorkDao {
         WHERE id = :id
         """)
     suspend fun likeById(id: Long)
+    @Query("DELETE FROM PostEntity WHERE id = :id")
+    suspend fun removeById(id: Long)
 }

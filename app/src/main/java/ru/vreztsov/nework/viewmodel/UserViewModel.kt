@@ -3,6 +3,8 @@ package ru.vreztsov.nework.viewmodel
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -31,7 +33,12 @@ class UserViewModel @Inject constructor(
 //            }
         }
 
-    private var _dataUsersList: List<User> = listOf()
+    private var _dataUsersList: List<User> = mutableListOf()
+
+    val selectedUsersList: LiveData<List<User>>
+        get() = _selectedUsersList
+
+    private var _selectedUsersList = MutableLiveData<List<User>>(emptyList())
 
     init {
         getData()
@@ -49,4 +56,7 @@ class UserViewModel @Inject constructor(
     }
 
     fun getUserById(id: Long): User? = _dataUsersList.find { it.id == id }
+    fun saveSelected(list: List<User>) {
+        _selectedUsersList.value = list
+    }
 }

@@ -3,6 +3,7 @@ package ru.vreztsov.nework.api
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -12,7 +13,9 @@ import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.Path
 import ru.vreztsov.nework.auth.AuthState
+import ru.vreztsov.nework.dto.MediaResponse
 import ru.vreztsov.nework.dto.Post
+import ru.vreztsov.nework.dto.RandomDataClass
 import ru.vreztsov.nework.dto.User
 
 interface ApiService {
@@ -55,6 +58,20 @@ interface ApiService {
 
     @GET("users/{id}")
     suspend fun getUserById(@Path("id") id: Long): Response<User>
+
+    @POST("posts")
+    suspend fun save(@Body post: Post): Response<Post>
+
+
+    @POST("posts")
+    suspend fun saveRandom(@Body obj: RandomDataClass): Response<RandomDataClass>
+
+    @Multipart
+    @POST("media")
+    suspend fun upload(@Part media: MultipartBody.Part): Response<MediaResponse>
+
+    @DELETE("posts/{id}")
+    suspend fun removeById(@Path("id") id: Long): Response<Unit>
 
 
 }
