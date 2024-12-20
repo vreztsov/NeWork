@@ -8,7 +8,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import ru.vreztsov.nework.auth.AppAuth
 import ru.vreztsov.nework.dto.User
@@ -25,13 +24,14 @@ class UserViewModel @Inject constructor(
         get() = appAuth.authStateFlow.value.id != 0L
 
     val dataUsersList
-        get() = flow {
-//            while (true) {
-            getData()
-            emit(_dataUsersList)
-//                delay(10_000)
-//            }
-        }
+        get() = repository.dataUsers
+//        get() = flow {
+////            while (true) {
+//            getData()
+//            emit(_dataUsersList)
+////                delay(10_000)
+////            }
+//        }
 
     private var _dataUsersList: List<User> = mutableListOf()
 

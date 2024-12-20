@@ -30,6 +30,8 @@ import ru.vreztsov.nework.util.BindingUtils.setCommonPostListeners
 import ru.vreztsov.nework.util.BundleArguments.Companion.post
 import ru.vreztsov.nework.util.BundleArguments.Companion.userId
 import ru.vreztsov.nework.util.BundleArguments.Companion.userIdList
+import ru.vreztsov.nework.util.BundleArguments.Companion.userWallType
+import ru.vreztsov.nework.util.UserWallType
 import ru.vreztsov.nework.util.listener.AbstractPostOnInteractionListener
 import ru.vreztsov.nework.viewmodel.PostViewModel
 import ru.vreztsov.nework.viewmodel.UserViewModel
@@ -65,7 +67,7 @@ class DetailedPostFragment : Fragment() {
             fillCommonPostViews(view, post)
             withCoordinates(post) { latitude, longitude ->
                 mapContainer.visibility = View.VISIBLE
-                mapContainer.layoutParams.apply { height = width / 20}
+                mapContainer.layoutParams.apply { height = width / 20 }
                 map = mapview.mapWindow.map
                 val zoomMap = 12.0f
                 map.move(
@@ -83,14 +85,17 @@ class DetailedPostFragment : Fragment() {
                     //TODO реализовать userFragment
                 }
 
-                override fun onPlusClick(userList: List<User>) {
+                override fun onPlusClick(userList: List<User>, type: UserWallType) {
                     findNavController().navigate(R.id.action_detailedPostFragment_to_userWallFragment,
-                        Bundle().apply { userIdList = userList.map { it.id } }
+                        Bundle().apply {
+                            userWallType = type
+                            userIdList = userList.map { it.id }
+                        }
                     )
                 }
             }
-            likeAdapter = AvatarAdapter(onInteractionListener)
-            mensionAdapter = AvatarAdapter(onInteractionListener)
+            likeAdapter = AvatarAdapter(UserWallType.LIKERS_LIST, onInteractionListener)
+            mensionAdapter = AvatarAdapter(UserWallType.MENTIONED_LIST, onInteractionListener)
             likersList.adapter = likeAdapter
             mensionedList.adapter = mensionAdapter
             lifecycleScope.launch {

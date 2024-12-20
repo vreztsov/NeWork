@@ -30,7 +30,6 @@ import ru.vreztsov.nework.viewmodel.UserViewModel
 class UserWallFragment : Fragment() {
     private lateinit var binding: FragmentUserWallBinding
     private lateinit var adapter: UsersAdapter
-    private var isSelectable = false
     private val userMap: MutableMap<Long, Boolean> = hashMapOf()
     val viewModel: UserViewModel by activityViewModels()
 
@@ -48,9 +47,6 @@ class UserWallFragment : Fragment() {
                         it.forEach { id -> userMap[id] = true }
                     }
                     val listener = object : UserOnInteractionListener {
-                        override fun onClick(user: User) {
-                        }
-
                         override fun onSelect(user: User, isChecked: Boolean) {
                             userMap[user.id] = isChecked
                         }
@@ -91,21 +87,23 @@ class UserWallFragment : Fragment() {
                                     userId = user.id
                                 })
                         }
-
-                        override fun onSelect(user: User, isChecked: Boolean) {
-                        }
                     }
-                    adapter = UsersAdapter(isSelectable = false, onInteractionListener = listener)
+                    adapter = UsersAdapter(onInteractionListener = listener)
                     binding.wall.adapter = adapter
                     arguments?.userIdList?.let { list ->
                         lifecycleScope.launch {
                             viewModel.dataUsersList.collectLatest {
                                 adapter.submitList(
-                                    list.mapNotNull { id ->
-                                        it.find { user ->
-                                            user.id == id
-                                        }
+                                    it.filter {user ->
+                                        list.contains(user.id)
+                                    }.sortedBy {
+                                        user -> list.indexOf(user.id)
                                     }
+//                                    list.mapNotNull { id ->
+//                                        it.find { user ->
+//                                            user.id == id
+//                                        }
+//                                    }
                                 )
                             }
                         }
@@ -114,7 +112,6 @@ class UserWallFragment : Fragment() {
             }
             with(binding) {
                 topAppBar.title = userWallType.title
-                isSelectable = (userWallType == USERS_CHOOSING)
                 topAppBar.setNavigationOnClickListener {
                     findNavController().navigateUp()
                 }

@@ -13,7 +13,7 @@ import ru.vreztsov.nework.util.listener.UserOnInteractionListener
 
 
 class UsersAdapter(
-    private val isSelectable: Boolean,
+    private val isSelectable: Boolean = false,
     private val selectedUserIdList: List<Long>? = null,
     private val onInteractionListener: UserOnInteractionListener
 ) : ListAdapter<User, UserViewHolder>(UserDiffCallback()) {
