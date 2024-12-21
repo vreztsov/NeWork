@@ -8,13 +8,13 @@
     tools:context=".ui.DetailedEventFragment">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/eventAppBar"
+        android:id="@+id/event_app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/topAppBar"
+            android:id="@+id/top_app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/eventCardContent"
+                android:id="@+id/event_card_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="@dimen/common_spacing">
@@ -59,15 +59,15 @@
                     android:singleLine="true"
                     android:textSize="@dimen/author_text_size"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@+id/datePublished"
-                    app:layout_constraintEnd_toStartOf="@+id/moreVert"
+                    app:layout_constraintBottom_toTopOf="@+id/date_published"
+                    app:layout_constraintEnd_toStartOf="@+id/more_vert"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toEndOf="@+id/avatar"
                     app:layout_constraintTop_toTopOf="@+id/avatar"
                     tools:text="@string/test_title" />
 
                 <TextView
-                    android:id="@+id/datePublished"
+                    android:id="@+id/date_published"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/usual_margin"
@@ -76,14 +76,14 @@
                     android:singleLine="true"
                     android:textSize="@dimen/edit_text_size"
                     app:layout_constraintBottom_toBottomOf="@+id/avatar"
-                    app:layout_constraintEnd_toStartOf="@+id/moreVert"
+                    app:layout_constraintEnd_toStartOf="@+id/more_vert"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toEndOf="@+id/avatar"
                     app:layout_constraintTop_toBottomOf="@+id/title"
                     tools:text="@string/test_data_published" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/moreVert"
+                    android:id="@+id/more_vert"
                     style="@style/Widget.AppTheme.MoreButton"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
@@ -100,14 +100,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:barrierDirection="bottom"
-                    app:constraint_referenced_ids="avatar, datePublished, title, moreVert" />
+                    app:constraint_referenced_ids="avatar, date_published, title, more_vert" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/eventFormatBlock"
+                    android:id="@+id/event_format_block"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingVertical="@dimen/common_spacing"
-                    app:layout_constraintBottom_toTopOf="@id/barrierEventInfo"
+                    app:layout_constraintBottom_toTopOf="@id/barrier_event_info"
                     app:layout_constraintTop_toBottomOf="@id/barrier1">
 
                     <LinearLayout
@@ -119,7 +119,7 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <TextView
-                            android:id="@+id/eventFormat"
+                            android:id="@+id/event_format"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
@@ -129,7 +129,7 @@
                             tools:text="@string/online" />
 
                         <TextView
-                            android:id="@+id/eventDateTime"
+                            android:id="@+id/event_date_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
@@ -140,7 +140,7 @@
                     </LinearLayout>
 
                     <ImageButton
-                        android:id="@+id/playEventAudio"
+                        android:id="@+id/play_event_audio"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:contentDescription="@string/play_audio"
@@ -153,11 +153,11 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.Barrier
-                    android:id="@+id/barrierEventInfo"
+                    android:id="@+id/barrier_event_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:barrierDirection="bottom"
-                    app:constraint_referenced_ids="eventFormatBlock" />
+                    app:constraint_referenced_ids="event_format_block" />
 
                 <TextView
                     android:id="@+id/content"
@@ -167,7 +167,7 @@
                     android:layout_marginEnd="@dimen/usual_margin"
                     android:paddingVertical="@dimen/usual_margin"
                     android:textSize="16sp"
-                    app:layout_constraintTop_toBottomOf="@+id/barrierEventInfo"
+                    app:layout_constraintTop_toBottomOf="@+id/barrier_event_info"
                     tools:text="@string/test_content" />
 
                 <androidx.constraintlayout.widget.Barrier
@@ -184,7 +184,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:barrierDirection="bottom"
-                app:constraint_referenced_ids="eventCardContent" />
+                app:constraint_referenced_ids="event_card_content" />
 
 
             <androidx.constraintlayout.widget.Barrier
@@ -292,7 +292,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
-                android:id="@+id/companyLayout"
+                android:id="@+id/company_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -310,7 +310,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/companyValue"
+                    android:id="@+id/company_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
@@ -323,12 +323,12 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/speakersLayout"
+                android:id="@+id/speakers_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="@dimen/common_spacing"
-                app:layout_constraintTop_toBottomOf="@id/companyLayout">
+                app:layout_constraintTop_toBottomOf="@id/company_layout">
 
                 <TextView
                     android:id="@+id/speakers"
@@ -341,18 +341,18 @@
                     android:textStyle="bold" />
 
                 <RelativeLayout
-                    android:id="@+id/speakersList"
+                    android:id="@+id/speakers_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"></RelativeLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/likersLayout"
+                android:id="@+id/likers_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="@dimen/common_spacing"
-                app:layout_constraintTop_toBottomOf="@id/speakersLayout">
+                app:layout_constraintTop_toBottomOf="@id/speakers_layout">
 
                 <TextView
                     android:id="@+id/likers"
@@ -383,7 +383,7 @@
                         tools:ignore="TouchTargetSizeCheck" />
 
                     <RelativeLayout
-                        android:id="@+id/likersList"
+                        android:id="@+id/likers_list"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"></RelativeLayout>
 
@@ -391,12 +391,12 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/participantsLayout"
+                android:id="@+id/participants_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="@dimen/common_spacing"
-                app:layout_constraintTop_toBottomOf="@id/likersLayout">
+                app:layout_constraintTop_toBottomOf="@id/likers_layout">
 
                 <TextView
                     android:id="@+id/participants"
@@ -427,7 +427,7 @@
                         tools:ignore="TouchTargetSizeCheck" />
 
                     <RelativeLayout
-                        android:id="@+id/participantsList"
+                        android:id="@+id/participants_list"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"></RelativeLayout>
                 </LinearLayout>
@@ -436,7 +436,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/participantsLayout"
+                app:layout_constraintTop_toBottomOf="@id/participants_layout"
                 android:visibility="gone">
 
                 <com.yandex.mapkit.mapview.MapView

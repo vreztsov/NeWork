@@ -12,7 +12,7 @@
         android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cardContent"
+            android:id="@+id/card_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="@dimen/common_spacing">
@@ -110,11 +110,11 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/barrierVideo"
+            android:id="@+id/barrier_video"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
-            app:constraint_referenced_ids="cardContent" />
+            app:constraint_referenced_ids="card_content" />
 
 
         <androidx.constraintlayout.widget.Barrier
@@ -125,7 +125,7 @@
             app:constraint_referenced_ids="attachment_content" />
 
         <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/linkBarrier"
+            android:id="@+id/link_barrier"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
@@ -156,7 +156,7 @@
             android:textSize="16sp"
             app:icon="@drawable/ic_like_24dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/linkBarrier"
+            app:layout_constraintTop_toBottomOf="@id/link_barrier"
             tools:ignore="TouchTargetSizeCheck" />
 
         <com.google.android.material.button.MaterialButton
@@ -170,7 +170,7 @@
             android:textSize="16sp"
             app:icon="@drawable/ic_shared_24"
             app:layout_constraintStart_toEndOf="@id/like"
-            app:layout_constraintTop_toBottomOf="@id/linkBarrier"
+            app:layout_constraintTop_toBottomOf="@id/link_barrier"
             tools:ignore="TouchTargetSizeCheck" />
 
         <com.google.android.material.button.MaterialButton
@@ -185,7 +185,7 @@
             android:textSize="16sp"
             app:icon="@drawable/ic_join_24dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/linkBarrier"
+            app:layout_constraintTop_toBottomOf="@id/link_barrier"
             tools:ignore="TouchTargetSizeCheck" />
 
 
@@ -193,7 +193,7 @@
             android:id="@+id/attachment_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintTop_toBottomOf="@+id/barrierVideo">
+            app:layout_constraintTop_toBottomOf="@+id/barrier_video">
 
             <ImageView
                 android:id="@+id/image_attachment"

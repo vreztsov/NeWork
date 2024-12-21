@@ -7,13 +7,13 @@
     tools:context=".ui.NewJobFragment">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/loginAppBar"
+        android:id="@+id/login_app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/topAppBar"
+            android:id="@+id/top_app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
@@ -26,10 +26,10 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/lateral_spacing"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/loginAppBar">
+        app:layout_constraintTop_toBottomOf="@id/login_app_bar">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layoutNameTextField"
+            android:id="@+id/layout_name_text_field"
             style="?attr/textInputFilledStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
             android:hint="@string/prompt_name">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/nameTextField"
+                android:id="@+id/name_text_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
@@ -46,7 +46,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layoutPositionTextField"
+            android:id="@+id/layout_position_text_field"
             style="?attr/textInputFilledStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
             android:hint="@string/prompt_position">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/positionTextField"
+                android:id="@+id/position_text_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
@@ -63,7 +63,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layoutLinkTextField"
+            android:id="@+id/layout_link_text_field"
             style="?attr/textInputFilledStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
             android:hint="@string/prompt_position">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/linkTextField"
+                android:id="@+id/link_text_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textUri"
@@ -80,7 +80,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/dateChip"
+            android:id="@+id/date_chip"
             style="@style/Widget.Material3.Chip.Assist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/createButton"
+        android:id="@+id/create_button"
         style="@style/Widget.Material3.Button.IconButton.Filled"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -8,13 +8,13 @@
     tools:context=".ui.RegistrationFragment">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/loginAppBar"
+        android:id="@+id/login_app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/topAppBar"
+            android:id="@+id/top_app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
@@ -65,7 +65,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/registerPhotoImageView"
+                android:id="@+id/register_photo_image_view"
                 android:layout_width="@dimen/reg_page_avatar"
                 android:layout_height="@dimen/reg_page_avatar"
                 android:src="@drawable/ic_upload_photo"
@@ -73,13 +73,13 @@
                 android:contentDescription="@string/user_photo"
                 />
             <TextView
-                android:id="@+id/photoInfoText"
+                android:id="@+id/photo_info_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"/>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layoutRegisterLoginTextField"
+                android:id="@+id/layout_register_login_text_field"
                 style="?attr/textInputFilledStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -88,7 +88,7 @@
                 android:hint="@string/prompt_login">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/registerLoginTextField"
+                    android:id="@+id/register_login_text_field"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
@@ -96,7 +96,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layoutRegisterNameTextField"
+                android:id="@+id/layout_register_name_text_field"
                 style="?attr/textInputFilledStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -105,7 +105,7 @@
                 android:hint="@string/prompt_name">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/registerNameTextField"
+                    android:id="@+id/register_name_text_field"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
@@ -113,7 +113,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layoutRegisterPasswordTextField"
+                android:id="@+id/layout_register_password_text_field"
                 style="?attr/textInputFilledStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
                 app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/registerPasswordTextField"
+                    android:id="@+id/register_password_text_field"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
@@ -132,7 +132,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layoutRegisterPasswordTextField2"
+                android:id="@+id/layout_register_password_text_field2"
                 style="?attr/textInputFilledStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -143,7 +143,7 @@
                 app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/registerPasswordTextField2"
+                    android:id="@+id/register_password_text_field2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
@@ -151,7 +151,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/registerButton"
+                android:id="@+id/register_button"
                 style="@style/Widget.Material3.Button.TonalButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -165,4 +165,6 @@
 
 
 </LinearLayout>
+
+
 

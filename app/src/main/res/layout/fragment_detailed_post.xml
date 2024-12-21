@@ -8,13 +8,13 @@
     tools:context=".ui.DetailedPostFragment">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/eventAppBar"
+        android:id="@+id/event_app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/topAppBar"
+            android:id="@+id/top_app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cardContent"
+                android:id="@+id/card_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="@dimen/common_spacing">
@@ -74,7 +74,7 @@
                     android:singleLine="true"
                     android:textSize="@dimen/author_text_size"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@+id/authorJob"
+                    app:layout_constraintBottom_toTopOf="@+id/author_job"
                     app:layout_constraintEnd_toStartOf="@id/menu"
                     app:layout_constraintStart_toEndOf="@id/avatar_frame"
                     app:layout_constraintTop_toTopOf="parent"
@@ -82,7 +82,7 @@
                     tools:text="@string/test_title" />
 
                 <TextView
-                    android:id="@+id/authorJob"
+                    android:id="@+id/author_job"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/common_spacing"
@@ -112,16 +112,16 @@
                     android:layout_height="wrap_content"
                     android:visibility="invisible"
                     app:barrierDirection="bottom"
-                    app:constraint_referenced_ids="avatar_frame,authorJob,menu" />
+                    app:constraint_referenced_ids="avatar_frame,author_job,menu" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.Barrier
-                android:id="@+id/barrierVideo"
+                android:id="@+id/barrier_video"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:barrierDirection="bottom"
-                app:constraint_referenced_ids="cardContent" />
+                app:constraint_referenced_ids="card_content" />
 
 
             <androidx.constraintlayout.widget.Barrier
@@ -132,7 +132,7 @@
                 app:constraint_referenced_ids="attachment_content" />
 
             <androidx.constraintlayout.widget.Barrier
-                android:id="@+id/linkBarrier"
+                android:id="@+id/link_barrier"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:barrierDirection="bottom"
@@ -182,7 +182,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@+id/barrierVideo">
+                app:layout_constraintTop_toBottomOf="@+id/barrier_video">
 
                 <ImageView
                     android:id="@+id/image_attachment"
@@ -274,7 +274,7 @@
                 tools:text="@string/test_content" />
 
             <LinearLayout
-                android:id="@+id/likersLayout"
+                android:id="@+id/likers_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -321,12 +321,12 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/mentionedLayout"
+                android:id="@+id/mentioned_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="@dimen/basic_screen_padding"
-                app:layout_constraintTop_toBottomOf="@id/likersLayout">
+                app:layout_constraintTop_toBottomOf="@id/likers_layout">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -370,7 +370,7 @@
                 android:id="@+id/map_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/mentionedLayout">
+                app:layout_constraintTop_toBottomOf="@id/mentioned_layout">
 
                 <com.yandex.mapkit.mapview.MapView
                     android:id="@+id/mapview"

@@ -7,13 +7,13 @@
     tools:context=".ui.EditPostFragment">
 
         <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/editHeader"
+            android:id="@+id/edit_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/topAppBar"
+                android:id="@+id/top_app_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="?attr/actionBarSize"
@@ -25,13 +25,13 @@
 
 
     <ScrollView
-        android:id="@+id/editPostScrollView"
+        android:id="@+id/edit_post_scroll_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/editFooter"
+        app:layout_constraintBottom_toTopOf="@id/edit_footer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editHeader">
+        app:layout_constraintTop_toBottomOf="@id/edit_header">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -39,7 +39,7 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/editPost"
+                android:id="@+id/edit_post"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints="@string/enter_text"
@@ -51,7 +51,7 @@
                 tools:ignore="LabelFor" />
 
             <FrameLayout
-                android:id="@+id/photoContainer"
+                android:id="@+id/photo_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -63,7 +63,7 @@
                     android:contentDescription="@string/description_photo" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/removePhoto"
+                    android:id="@+id/remove_photo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|bottom"
@@ -73,7 +73,7 @@
     </ScrollView>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/editFooter"
+        android:id="@+id/edit_footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -81,7 +81,7 @@
 
 
         <com.google.android.material.bottomappbar.BottomAppBar
-            android:id="@+id/editPostBottomAppBar"
+            android:id="@+id/edit_post_bottom_app_bar"
             style="@style/Widget.Material3.BottomAppBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -89,7 +89,7 @@
             app:menu="@menu/editor_bottom_app_bar" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/openEventDialog"
+            android:id="@+id/open_event_dialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|end"
@@ -100,7 +100,7 @@
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/bottomSheet"
+        android:id="@+id/bottom_sheet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"

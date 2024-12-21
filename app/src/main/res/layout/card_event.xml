@@ -14,7 +14,7 @@
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/eventCardContent"
+            android:id="@+id/event_card_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="@dimen/common_spacing">
@@ -40,15 +40,15 @@
                 android:singleLine="true"
                 android:textSize="@dimen/author_text_size"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/datePublished"
-                app:layout_constraintEnd_toStartOf="@+id/moreVert"
+                app:layout_constraintBottom_toTopOf="@+id/date_published"
+                app:layout_constraintEnd_toStartOf="@+id/more_vert"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/avatar"
                 app:layout_constraintTop_toTopOf="@+id/avatar"
                 tools:text="@string/test_title" />
 
             <TextView
-                android:id="@+id/datePublished"
+                android:id="@+id/date_published"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/usual_margin"
@@ -57,14 +57,14 @@
                 android:singleLine="true"
                 android:textSize="@dimen/edit_text_size"
                 app:layout_constraintBottom_toBottomOf="@+id/avatar"
-                app:layout_constraintEnd_toStartOf="@+id/moreVert"
+                app:layout_constraintEnd_toStartOf="@+id/more_vert"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/avatar"
                 app:layout_constraintTop_toBottomOf="@+id/title"
                 tools:text="@string/test_data_published" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/moreVert"
+                android:id="@+id/more_vert"
                 style="@style/Widget.AppTheme.MoreButton"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -81,15 +81,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:barrierDirection="bottom"
-                app:constraint_referenced_ids="avatar, datePublished, title, moreVert" />
+                app:constraint_referenced_ids="avatar, date_published, title, more_vert" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/eventFormatBlock"
+                android:id="@+id/event_format_block"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingVertical="@dimen/common_spacing"
                 app:layout_constraintTop_toBottomOf="@id/barrier1"
-                app:layout_constraintBottom_toTopOf="@id/barrierEventInfo">
+                app:layout_constraintBottom_toTopOf="@id/barrier_event_info">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -100,7 +100,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/eventFormat"
+                        android:id="@+id/event_format"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
@@ -110,7 +110,7 @@
                         tools:text="@string/online"/>
 
                     <TextView
-                        android:id="@+id/eventDateTime"
+                        android:id="@+id/event_date_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
@@ -121,7 +121,7 @@
                 </LinearLayout>
 
                 <ImageButton
-                    android:id="@+id/playEventAudio"
+                    android:id="@+id/play_event_audio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_event_play_button"
@@ -134,11 +134,11 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.Barrier
-                android:id="@+id/barrierEventInfo"
+                android:id="@+id/barrier_event_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:barrierDirection="bottom"
-                app:constraint_referenced_ids="eventFormatBlock" />
+                app:constraint_referenced_ids="event_format_block" />
 
             <TextView
                 android:id="@+id/content"
@@ -148,7 +148,7 @@
                 android:layout_marginEnd="@dimen/usual_margin"
                 android:paddingVertical="@dimen/usual_margin"
                 android:textSize="16sp"
-                app:layout_constraintTop_toBottomOf="@+id/barrierEventInfo"
+                app:layout_constraintTop_toBottomOf="@+id/barrier_event_info"
                 tools:text="@string/test_content" />
 
             <androidx.constraintlayout.widget.Barrier
@@ -166,7 +166,7 @@
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
             android:visibility="invisible"
-            app:constraint_referenced_ids="eventCardContent" />
+            app:constraint_referenced_ids="event_card_content" />
 
 
         <androidx.constraintlayout.widget.Barrier

@@ -11,13 +11,13 @@
         android:layout_height="match_parent">
 
         <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/loginAppBar"
+            android:id="@+id/login_app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/topAppBar"
+                android:id="@+id/top_app_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="?attr/actionBarSize"
@@ -27,10 +27,10 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <ScrollView
-            android:id="@+id/scrollingAvatar"
+            android:id="@+id/scrolling_avatar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/loginAppBar">
+            app:layout_constraintTop_toBottomOf="@id/login_app_bar">
 
             <ImageView
                 android:id="@+id/avatar"
@@ -44,7 +44,7 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/scrollingAvatar">
+            app:layout_constraintTop_toBottomOf="@id/scrolling_avatar">
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
@@ -65,7 +65,7 @@
             app:layout_constraintTop_toBottomOf="@id/tabs">
 
             <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/userContent"
+                android:id="@+id/user_content"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 tools:layout="@layout/fragment_user_wall" />
