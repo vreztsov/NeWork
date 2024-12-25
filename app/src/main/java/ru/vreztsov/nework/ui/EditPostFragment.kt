@@ -207,7 +207,7 @@ class EditPostFragment : Fragment() {
                     }
 
                     R.id.tag_users -> {
-                        findNavController().navigate(R.id.action_editPostFragment_to_userWallFragment,
+                        findNavController().navigate(R.id.action_editPostFragment_to_userListFragment,
                             Bundle().apply
                             {
                                 userWallType = UserWallType.USERS_CHOOSING

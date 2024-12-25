@@ -8,12 +8,15 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ru.vreztsov.nework.R
 import ru.vreztsov.nework.dto.Post
+import ru.vreztsov.nework.ui.DetailedEventFragment
 import ru.vreztsov.nework.ui.DetailedPostFragment
 import ru.vreztsov.nework.ui.EventsFragment
 import ru.vreztsov.nework.ui.PostsFragment
+import ru.vreztsov.nework.ui.UserListFragment
 import ru.vreztsov.nework.ui.UsersFragment
 import ru.vreztsov.nework.util.BundleArguments.Companion.editType
 import ru.vreztsov.nework.util.BundleArguments.Companion.post
+import ru.vreztsov.nework.util.BundleArguments.Companion.userId
 
 fun goToLogin(startFragment: Fragment) {
     val actionFromTo = when {
@@ -25,7 +28,7 @@ fun goToLogin(startFragment: Fragment) {
     }
 }
 
-fun goToPostEditing(startFragment: Fragment, post: Post){
+fun goToPostEditing(startFragment: Fragment, post: Post) {
     val bundle = Bundle().apply {
         this.editType = EditType.EDIT_POST
         this.post = post
@@ -37,6 +40,21 @@ fun goToPostEditing(startFragment: Fragment, post: Post){
     }
     actionFromTo?.let {
         startFragment.findNavController().navigate(it, bundle)
+    }
+}
+
+fun goToUser(startFragment: Fragment, userId: Long) {
+    val actionFromTo = when (startFragment) {
+        is PostsFragment -> R.id.action_postsFragment_to_userWallFragment
+        is EventsFragment -> R.id.action_eventsFragment_to_userWallFragment
+        is UsersFragment -> R.id.action_usersFragment_to_userWallFragment
+        is DetailedPostFragment -> R.id.action_detailedPostFragment_to_userWallFragment
+        is DetailedEventFragment -> R.id.action_detailedEventFragment_to_userWallFragment
+        is UserListFragment -> R.id.action_userListFragment_to_userWallFragment
+        else -> null
+    }
+    actionFromTo?.let {
+        startFragment.findNavController().navigate(it, Bundle().apply { this.userId = userId })
     }
 }
 

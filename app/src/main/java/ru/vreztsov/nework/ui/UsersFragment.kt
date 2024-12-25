@@ -14,6 +14,8 @@ import kotlinx.coroutines.launch
 import ru.vreztsov.nework.R
 import ru.vreztsov.nework.adapter.UsersAdapter
 import ru.vreztsov.nework.databinding.FragmentUsersBinding
+import ru.vreztsov.nework.dto.User
+import ru.vreztsov.nework.util.goToUser
 import ru.vreztsov.nework.util.listener.UserOnInteractionListener
 import ru.vreztsov.nework.util.setBottomNavigationViewListener
 import ru.vreztsov.nework.util.setTopAppBarListener
@@ -39,7 +41,11 @@ class UsersFragment : Fragment() {
     }
 
     private fun createAdapter() = UsersAdapter(
-        onInteractionListener = object : UserOnInteractionListener {}
+        onInteractionListener = object : UserOnInteractionListener {
+            override fun onClick(user: User) {
+                goToUser(this@UsersFragment, user.id)
+            }
+        }
     )
 
     private fun subscribe() {

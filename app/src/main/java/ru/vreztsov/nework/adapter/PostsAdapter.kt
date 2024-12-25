@@ -2,11 +2,9 @@ package ru.vreztsov.nework.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import ru.vreztsov.nework.R
 import ru.vreztsov.nework.databinding.CardPostBinding
 import ru.vreztsov.nework.dto.Post
 import ru.vreztsov.nework.util.BindingUtils.fillCommonPostViews
@@ -56,6 +54,9 @@ class PostViewHolder(
             }
             postCard.setOnClickListener {
                 onInteractionListener.onPostCLick(post)
+            }
+            avatar.setOnClickListener {
+                onInteractionListener.onAvatarCLick(post.authorId)
             }
         }
     }

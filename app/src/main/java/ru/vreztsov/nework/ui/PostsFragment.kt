@@ -23,6 +23,7 @@ import ru.vreztsov.nework.util.BundleArguments.Companion.editType
 import ru.vreztsov.nework.util.BundleArguments.Companion.post
 import ru.vreztsov.nework.util.EditType
 import ru.vreztsov.nework.util.goToLogin
+import ru.vreztsov.nework.util.goToUser
 import ru.vreztsov.nework.util.listener.AbstractPostOnInteractionListener
 import ru.vreztsov.nework.util.setBottomNavigationViewListener
 import ru.vreztsov.nework.util.setTopAppBarListener
@@ -54,6 +55,11 @@ class PostsFragment : Fragment() {
 
     private fun createAdapter(): PostsAdapter = PostsAdapter(
         object : AbstractPostOnInteractionListener(this, viewModel, mediaPlayer) {
+
+            override fun onAvatarCLick(userId: Long) {
+                goToUser(this@PostsFragment, userId)
+//                findNavController().navigate(R.id.action_postsFragment_to_tempWallFragment)
+            }
 
             override fun onPostCLick(post: Post) {
                 findNavController().navigate(

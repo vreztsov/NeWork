@@ -7,27 +7,30 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import retrofit2.Retrofit
+import retrofit2.Response
 import ru.vreztsov.nework.api.ApiService
 import ru.vreztsov.nework.dao.NeWorkDao
 import ru.vreztsov.nework.dto.Attachment
 import ru.vreztsov.nework.dto.AttachmentType
+import ru.vreztsov.nework.dto.Job
 import ru.vreztsov.nework.dto.MediaResponse
 import ru.vreztsov.nework.dto.MediaUpload
 import ru.vreztsov.nework.dto.Post
-import ru.vreztsov.nework.dto.RandomDataClass
 import ru.vreztsov.nework.dto.User
+import ru.vreztsov.nework.entity.JobEntity
 import ru.vreztsov.nework.entity.PostEntity
 import ru.vreztsov.nework.entity.UserEntity
 import ru.vreztsov.nework.entity.toDto
 import ru.vreztsov.nework.entity.toEntity
 import ru.vreztsov.nework.error.*
+import ru.vreztsov.nework.util.SuspendReceiver
+import ru.vreztsov.nework.util.SuspendSupplier
 import java.io.IOException
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
     private val dao: NeWorkDao,
-    private val apiService: ApiService
+    private val apiService: ApiService,
 ) : Repository {
     override val data: Flow<List<Post>> = dao.getAll()
         .map(List<PostEntity>::toDto)
@@ -36,6 +39,10 @@ class RepositoryImpl @Inject constructor(
     override val dataUsers: Flow<List<User>> = dao.getUsers()
         .map(List<UserEntity>::toDto)
         .flowOn(Dispatchers.Default)
+    override val dataJobs: Flow<List<Job>> = dao.getJobs()
+        .map(List<JobEntity>::toDto)
+        .flowOn(Dispatchers.Default)
+
 
     override suspend fun getAllAsync() {
         try {
@@ -67,14 +74,72 @@ class RepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun likeById(postId: Long) {
-//        dao.likeById(postId)
-        likeByIdOnServer(postId)
+    override suspend fun getJobsAsync(ownerId: Long) {
+        try {
+            val response = apiService.getUserJobs(ownerId)
+            if (!response.isSuccessful) {
+                throw ApiError(response.code(), response.message())
+            }
+            val body = response.body() ?: throw UnknownError
+            dao.insertJobs(body.toEntity(ownerId))
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
     }
 
-    private suspend fun likeByIdOnServer(id: Long) {
+    override suspend fun getMyJobsAsync(ownerId: Long) {
         try {
-            val getThePostResponse = apiService.getById(id)
+            val response = apiService.getMyJobs()
+            if (!response.isSuccessful) {
+                throw ApiError(response.code(), response.message())
+            }
+            val body = response.body() ?: throw UnknownError
+            dao.insertJobs(body.toEntity(ownerId))
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
+    }
+
+    override suspend fun insertMyJobs(list: List<Job>, myId: Long){
+        dao.insertJobs(list.toEntity(myId))
+    }
+
+    private suspend fun <DTO> getAsync(
+        responseGetter: SuspendSupplier<Response<List<DTO>>>,
+        daoInserter: SuspendReceiver<List<DTO>>
+    ) {
+        try {
+            val response: Response<List<DTO>> = responseGetter.invoke()
+            if (!response.isSuccessful) {
+                throw ApiError(response.code(), response.message())
+            }
+            val body = response.body() ?: throw UnknownError
+            daoInserter.invoke(body)
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
+    }
+
+    override suspend fun likeById(postId: Long) {
+//        dao.likeById(postId)
+        likeByIdOnServer(postId = postId)
+    }
+
+    override suspend fun onWallLikeById(authorId: Long, postId: Long) {
+        likeByIdOnServer(authorId, postId)
+    }
+
+    private suspend fun likeByIdOnServer(authorId: Long? = null, postId: Long) {
+        try {
+            val getThePostResponse = authorId?.let {
+                apiService.getFromWallById(it, postId)
+            } ?: apiService.getById(postId)
             if (!getThePostResponse.isSuccessful) {
                 throw ApiError(getThePostResponse.code(), getThePostResponse.message())
             }
@@ -83,8 +148,16 @@ class RepositoryImpl @Inject constructor(
                 getThePostResponse.message()
             )
             val likeResponse =
-                if (body.likedByMe) apiService.dislikeById(id)
-                else apiService.likeById(id)
+                if (body.likedByMe) {
+                    authorId?.let {
+                        apiService.onWallDislikeById(it, postId)
+                    } ?: apiService.dislikeById(postId)
+                }
+                else {
+                    authorId?.let {
+                        apiService.onWallLikeById(it, postId)
+                    } ?: apiService.likeById(postId)
+                }
             if (!likeResponse.isSuccessful) {
                 throw ApiError(likeResponse.code(), likeResponse.message())
             }
@@ -155,6 +228,36 @@ class RepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun saveMyJob(job: Job) {
+        try {
+            val response = apiService.saveMyJob(job)
+            if (!response.isSuccessful) {
+                Log.e(response.code().toString(), response.message())
+                throw ApiError(response.code(), response.message())
+            }
+            val body = response.body() ?: throw ApiError(response.code(), response.message())
+            dao.insertJob(JobEntity.fromDto(body))
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
+    }
+
+    override suspend fun removeMyJobById(id: Long) {
+        try {
+            val response = apiService.removeMyJobById(id)
+            if (!response.isSuccessful) {
+                throw ApiError(response.code(), response.message())
+            }
+            dao.removeByIdJob(id)
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
+    }
+
     override suspend fun savePostWithAttachment(
         post: Post,
         upload: MediaUpload,
@@ -172,6 +275,36 @@ class RepositoryImpl @Inject constructor(
             savePost(postWithAttachment)
         } catch (e: AppError) {
             throw e
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
+    }
+
+    override suspend fun loadUserWall(id: Long) {
+        try {
+            val response = apiService.loadUserWall(id)
+            if (!response.isSuccessful) {
+                throw ApiError(response.code(), response.message())
+            }
+            val body = response.body() ?: throw ApiError(response.code(), response.message())
+            dao.insert(body.toEntity())
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
+    }
+
+    override suspend fun loadMyWall() {
+        try {
+            val response = apiService.loadMyWall()
+            if (!response.isSuccessful) {
+                throw ApiError(response.code(), response.message())
+            }
+            val body = response.body() ?: throw ApiError(response.code(), response.message())
+            dao.insert(body.toEntity())
         } catch (e: IOException) {
             throw NetworkError
         } catch (e: Exception) {

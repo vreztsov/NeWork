@@ -48,7 +48,7 @@ class UserViewModel @Inject constructor(
         try {
             repository.getAllUsersAsync()
         } catch (e: Exception) {
-            Log.e("UsersViewModel", "Failed to get users list")
+            Log.e("UserViewModel", "Failed to get users list")
         }
         repository.dataUsers.collectLatest {
             _dataUsersList = it
@@ -56,9 +56,11 @@ class UserViewModel @Inject constructor(
     }
 
     fun getUserById(id: Long): User? = _dataUsersList.find { it.id == id }
+
 //    fun saveSelected(list: List<User>) {
 //        _selectedUsersList.value = list
 //    }
+
 
     fun saveSelected(list: List<Long>) {
         val userList = list.mapNotNull { id -> _dataUsersList.find { it.id == id } }

@@ -28,10 +28,10 @@ import ru.vreztsov.nework.util.AndroidUtils.withCoordinates
 import ru.vreztsov.nework.util.BindingUtils.fillCommonPostViews
 import ru.vreztsov.nework.util.BindingUtils.setCommonPostListeners
 import ru.vreztsov.nework.util.BundleArguments.Companion.post
-import ru.vreztsov.nework.util.BundleArguments.Companion.userId
 import ru.vreztsov.nework.util.BundleArguments.Companion.userIdList
 import ru.vreztsov.nework.util.BundleArguments.Companion.userWallType
 import ru.vreztsov.nework.util.UserWallType
+import ru.vreztsov.nework.util.goToUser
 import ru.vreztsov.nework.util.listener.AbstractPostOnInteractionListener
 import ru.vreztsov.nework.viewmodel.PostViewModel
 import ru.vreztsov.nework.viewmodel.UserViewModel
@@ -78,15 +78,12 @@ class DetailedPostFragment : Fragment() {
             } ?: let { mapContainer.visibility = View.GONE }
             val onInteractionListener = object : AvatarOnInteractionListener {
 
-                override fun onAvatarClick() {
-                    findNavController().navigate(R.id.action_detailedPostFragment_to_userFragment,
-                        Bundle().apply { userId = post.authorId }
-                    )
-                    //TODO реализовать userFragment
+                override fun onAvatarClick(user: User) {
+                    goToUser(this@DetailedPostFragment, user.id)
                 }
 
                 override fun onPlusClick(userList: List<User>, type: UserWallType) {
-                    findNavController().navigate(R.id.action_detailedPostFragment_to_userWallFragment,
+                    findNavController().navigate(R.id.action_detailedPostFragment_to_userListFragment,
                         Bundle().apply {
                             userWallType = type
                             userIdList = userList.map { it.id }
@@ -112,7 +109,9 @@ class DetailedPostFragment : Fragment() {
 
     private fun postListeners(view: View, post: Post) {
         val listener = object : AbstractPostOnInteractionListener(this, viewModel, mediaPlayer) {
-
+            override fun onAvatarCLick(userId: Long) {
+                goToUser(this@DetailedPostFragment, userId)
+            }
         }
         setCommonPostListeners(view, post, listener)
         binding.topAppBar.setOnMenuItemClickListener {

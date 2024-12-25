@@ -9,6 +9,7 @@ interface PostOnInteractionListener {
     fun onEdit(post: Post)
     fun onRemove(post: Post)
     fun onShare(post: Post)
+    fun onAvatarCLick(userId: Long)
     fun onPostCLick(post: Post)
     fun onPlayVideo(post: Post, videoView: VideoView, button: ImageButton)
     fun onPlayAudio(post: Post, button: ImageButton)

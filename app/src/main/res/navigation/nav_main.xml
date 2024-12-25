@@ -43,14 +43,14 @@
         android:label="fragment_detailed_post"
         tools:layout="@layout/fragment_detailed_post" >
         <action
-            android:id="@+id/action_detailedPostFragment_to_userFragment"
-            app:destination="@id/userFragment" />
+            android:id="@+id/action_detailedPostFragment_to_userWallFragment"
+            app:destination="@id/userWallFragment" />
         <action
             android:id="@+id/action_detailedPostFragment_to_usersFragment"
             app:destination="@id/usersFragment" />
         <action
-            android:id="@+id/action_detailedPostFragment_to_userWallFragment"
-            app:destination="@id/userWallFragment" />
+            android:id="@+id/action_detailedPostFragment_to_userListFragment"
+            app:destination="@id/userListFragment" />
         <action
             android:id="@+id/action_detailedPostFragment_to_editPostFragment"
             app:destination="@id/editPostFragment" />
@@ -61,14 +61,14 @@
         android:label="fragment_detailed_event"
         tools:layout="@layout/fragment_detailed_event" >
         <action
-            android:id="@+id/action_detailedEventFragment_to_userFragment"
-            app:destination="@id/userFragment" />
+            android:id="@+id/action_detailedEventFragment_to_userWallFragment"
+            app:destination="@id/userWallFragment" />
         <action
             android:id="@+id/action_detailedEventFragment_to_usersFragment"
             app:destination="@id/usersFragment" />
         <action
-            android:id="@+id/action_detailedEventFragment_to_userWallFragment"
-            app:destination="@id/userWallFragment" />
+            android:id="@+id/action_detailedEventFragment_to_userListFragment"
+            app:destination="@id/userListFragment" />
     </fragment>
     <fragment
         android:id="@+id/postsFragment"
@@ -93,6 +93,9 @@
         <action
             android:id="@+id/action_postsFragment_to_editPostFragment"
             app:destination="@id/editPostFragment" />
+        <action
+            android:id="@+id/action_postsFragment_to_userWallFragment"
+            app:destination="@id/userWallFragment" />
     </fragment>
     <fragment
         android:id="@+id/eventsFragment"
@@ -114,6 +117,9 @@
         <action
             android:id="@+id/action_eventsFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_eventsFragment_to_userWallFragment"
+            app:destination="@id/userWallFragment" />
     </fragment>
     <fragment
         android:id="@+id/usersFragment"
@@ -132,32 +138,35 @@
         <action
             android:id="@+id/action_usersFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_usersFragment_to_userWallFragment"
+            app:destination="@id/userWallFragment" />
     </fragment>
     <fragment
-        android:id="@+id/userFragment"
-        android:name="ru.vreztsov.nework.ui.UserFragment"
+        android:id="@+id/userWallFragment"
+        android:name="ru.vreztsov.nework.ui.UserWallFragment"
         android:label="fragment_user"
-        tools:layout="@layout/fragment_user" />
+        tools:layout="@layout/fragment_user_wall" />
     <fragment
         android:id="@+id/editPostFragment"
         android:name="ru.vreztsov.nework.ui.EditPostFragment"
         android:label="fragment_edit_post"
         tools:layout="@layout/fragment_edit_post" >
         <action
-            android:id="@+id/action_editPostFragment_to_userWallFragment"
-            app:destination="@id/userWallFragment" />
+            android:id="@+id/action_editPostFragment_to_userListFragment"
+            app:destination="@id/userListFragment" />
         <action
             android:id="@+id/action_editPostFragment_to_mapFragment"
             app:destination="@id/mapFragment" />
     </fragment>
     <fragment
-        android:id="@+id/userWallFragment"
-        android:name="ru.vreztsov.nework.ui.UserWallFragment"
+        android:id="@+id/userListFragment"
+        android:name="ru.vreztsov.nework.ui.UserListFragment"
         android:label="fragment_user_wall"
-        tools:layout="@layout/fragment_user_wall" >
+        tools:layout="@layout/fragment_user_list" >
         <action
-            android:id="@+id/action_userWallFragment_to_userFragment"
-            app:destination="@id/userFragment" />
+            android:id="@+id/action_userListFragment_to_userWallFragment"
+            app:destination="@id/userWallFragment" />
     </fragment>
     <fragment
         android:id="@+id/mapFragment"

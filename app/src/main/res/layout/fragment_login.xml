@@ -8,7 +8,7 @@
     tools:context=".ui.LoginFragment">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/login_app_bar"
+        android:id="@+id/basic_app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent">

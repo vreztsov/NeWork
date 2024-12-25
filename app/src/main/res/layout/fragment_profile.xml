@@ -11,7 +11,7 @@
         android:layout_height="match_parent">
 
         <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/login_app_bar"
+            android:id="@+id/basic_app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent">
@@ -27,10 +27,10 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <ScrollView
-            android:id="@+id/scrolling_avatar"
+            android:id="@+id/scroller"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/login_app_bar">
+            app:layout_constraintTop_toBottomOf="@id/basic_app_bar">
 
             <ImageView
                 android:id="@+id/avatar"
@@ -44,7 +44,7 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/scrolling_avatar">
+            app:layout_constraintTop_toBottomOf="@id/scroller">
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
@@ -68,7 +68,7 @@
                 android:id="@+id/user_content"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                tools:layout="@layout/fragment_user_wall" />
+                tools:layout="@layout/fragment_user_list" />
 
         </androidx.core.widget.NestedScrollView>
 

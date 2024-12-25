@@ -12,7 +12,7 @@ import ru.vreztsov.nework.util.BindingUtils.initAvatar
 import ru.vreztsov.nework.util.UserWallType
 
 interface AvatarOnInteractionListener {
-    fun onAvatarClick()
+    fun onAvatarClick(user: User)
     fun onPlusClick(userList: List<User>, type: UserWallType)
 }
 
@@ -57,7 +57,7 @@ class AvatarViewHolder(
             in 0 until MAX_AVATARS_LIST_SIZE -> {
                 initAvatar(binding, user.name, user.avatar)
                 binding.avatar.setOnClickListener {
-                    onInteractionListener.onAvatarClick()
+                    onInteractionListener.onAvatarClick(user)
                 }
             }
 

@@ -41,7 +41,6 @@ abstract class AbstractPostOnInteractionListener(
         if (fragment is DetailedPostFragment) {
             fragment.findNavController().navigateUp()
         }
-        //TODO реализовать удаление
     }
 
     override fun onShare(post: Post) {

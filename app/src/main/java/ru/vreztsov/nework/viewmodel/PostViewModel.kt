@@ -2,6 +2,7 @@ package ru.vreztsov.nework.viewmodel
 
 import android.app.Application
 import android.net.Uri
+import android.util.Log
 import androidx.core.net.toFile
 import androidx.core.net.toUri
 import androidx.lifecycle.AndroidViewModel
@@ -61,6 +62,7 @@ class PostViewModel @Inject constructor(
                         }
                     }
             }
+
 
     val isAuthorized: Boolean
         get() = appAuth.authStateFlow.value.id != 0L
@@ -130,6 +132,15 @@ class PostViewModel @Inject constructor(
 //            _dataState.value = PostsModelState()
         } catch (e: Exception) {
             _dataState.value = PostsModelState(error = true)
+        }
+    }
+
+    fun onWallLikeById(authorId: Long, postId: Long) = viewModelScope.launch {
+        try {
+            if (!isAuthorized) throw RuntimeException("User is not authorized")
+            repository.onWallLikeById(authorId, postId)
+        } catch (e: Exception) {
+            Log.e("PostViewModel", "Failed to like post with id = $postId on wall")
         }
     }
 
@@ -233,5 +244,23 @@ class PostViewModel @Inject constructor(
         )
 
     }
+
+    fun loadUserWall(id: Long) = viewModelScope.launch {
+        try {
+            repository.loadUserWall(id)
+        } catch (e: Exception){
+            Log.e("PostViewModel", "Failed to load wall of user with id = $id")
+        }
+    }
+
+    fun loadMyWall() = viewModelScope.launch {
+        try {
+            repository.loadMyWall()
+        } catch (e: Exception){
+            Log.e("PostViewModel", "Failed to load my wall")
+        }
+    }
+
+
 
 }
