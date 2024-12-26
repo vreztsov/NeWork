@@ -3,6 +3,7 @@ package ru.vreztsov.nework.ui
 import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
+import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.vreztsov.nework.adapter.JobsAdapter
@@ -49,14 +51,22 @@ class UserWallFragment : Fragment() {
     ): View {
         binding = FragmentUserWallBinding.inflate(inflater, container, false)
         postsAdapter = createPostsAdapter()
-//        jobsAdapter = createJobsAdapter()
+        jobsAdapter = createJobsAdapter()
         binding.postsList.adapter = postsAdapter
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
                 userViewModel.dataUsersList.collectLatest { userList ->
                     user = userList.find {
-                        it.id == arguments?.userId
+                        val id = arguments?.userId
+                        Log.i(
+                            "UserWallFragment", "Navigate to UserWallFragment, userId ${
+                                id?.let { userId ->
+                                    "= $userId"
+                                } ?: "not found"
+                            }")
+                        it.id == id
                     } ?: return@collectLatest
+                    Log.i("UserWallFragment", "User has been initialized")
                     with(binding) {
                         topAppBar.title = user.name
                         tabs.selectTab(tabs.getTabAt(0))
@@ -66,7 +76,9 @@ class UserWallFragment : Fragment() {
                                 RequestOptions.overrideOf(
                                     avatar.context.resources.displayMetrics.widthPixels
                                 )
-                            ).listener(object : RequestListener<Drawable> {
+                            )
+                            .centerCrop()
+                            .listener(object : RequestListener<Drawable> {
                                 override fun onLoadFailed(
                                     e: GlideException?,
                                     model: Any?,
@@ -142,28 +154,29 @@ class UserWallFragment : Fragment() {
             topAppBar.setNavigationOnClickListener {
                 findNavController().navigateUp()
             }
-//            tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-//                override fun onTabSelected(tab: TabLayout.Tab?) {
-//                    when (tab?.position) {
-//                        0 -> {
-////                            userRecyclerView.adapter = postsAdapter
-//                            postViewModel.loadUserWall(user.id)
-//                        }
-//
-//                        1 -> {
-////                            userRecyclerView.adapter = jobsAdapter
-//                            jobViewModel.loadUserJobs(user.id)
-//                        }
-//                    }
-//                }
-//
-//                override fun onTabUnselected(tab: TabLayout.Tab?) {
-//                }
-//
-//                override fun onTabReselected(tab: TabLayout.Tab?) {
-//                    // todo onSelected или что???
-//                }
-//            })
+            tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    when (tab?.position) {
+                        0 -> {
+                            postViewModel.loadUserWall(user.id)
+                            postsList.adapter = postsAdapter
+                        }
+
+                        1 -> {
+                            jobViewModel.loadUserJobs(user.id)
+                            postsList.adapter = jobsAdapter
+
+                        }
+                    }
+                }
+
+                override fun onTabUnselected(tab: TabLayout.Tab?) {
+                }
+
+                override fun onTabReselected(tab: TabLayout.Tab?) {
+                    // todo onSelected или что???
+                }
+            })
         }
     }
 }

@@ -7,8 +7,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.vreztsov.nework.databinding.CardJobBinding
 import ru.vreztsov.nework.dto.Job
+import ru.vreztsov.nework.util.DataViewTransform
 
-class JobsAdapter: ListAdapter<Job, JobViewHolder>(JobDiffCallback()) {
+class JobsAdapter : ListAdapter<Job, JobViewHolder>(JobDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): JobViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return JobViewHolder(
@@ -28,7 +29,13 @@ class JobViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(job: Job) {
-
+        with(binding) {
+            company.text = job.name
+            val start = DataViewTransform.jobDataToTextView(job.start)
+            val finish = job.finish?.let { DataViewTransform.jobDataToTextView(it) } ?: "НВ"
+            period.text = String.format("%s - %s", start, finish)
+            position.text = job.position
+        }
     }
 }
 

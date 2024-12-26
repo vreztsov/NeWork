@@ -17,5 +17,12 @@ object DataViewTransform {
     fun checkLinkFormat(link: String?): Boolean =
         link?.let { Patterns.WEB_URL.matcher(it).matches() } ?: false
 
+    @SuppressLint("SimpleDateFormat")
+    fun jobDataToTextView(source: String): String {
+        val dateFormat = SimpleDateFormat("dd MMMMMMMMMMM yyyy", Locale.ENGLISH)
+        val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(source) ?: return ""
+        return dateFormat.format(date)
+    }
+
 
 }

@@ -46,7 +46,9 @@ class UserViewModel @Inject constructor(
 
     private fun getData() = viewModelScope.launch {
         try {
+            Log.i("Repository", "Loading users list...")
             repository.getAllUsersAsync()
+            Log.i("Repository", "Users list ready")
         } catch (e: Exception) {
             Log.e("UserViewModel", "Failed to get users list")
         }
