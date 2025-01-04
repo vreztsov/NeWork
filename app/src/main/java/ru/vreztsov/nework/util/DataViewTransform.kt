@@ -19,9 +19,27 @@ object DataViewTransform {
 
     @SuppressLint("SimpleDateFormat")
     fun jobDataToTextView(source: String): String {
-        val dateFormat = SimpleDateFormat("dd MMMMMMMMMMM yyyy", Locale.ENGLISH)
+        val dateFormat = SimpleDateFormat("dd MM yyyy", Locale.ENGLISH)
         val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(source) ?: return ""
-        return dateFormat.format(date)
+        val str = dateFormat.format(date)
+        val range = 3..4
+        return str.replaceRange(range, replaceMonth(str.substring(range)))
+    }
+
+    private fun replaceMonth(digits: String): String = when (digits) {
+        "01" -> "января"
+        "02" -> "февраля"
+        "03" -> "марта"
+        "04" -> "апреля"
+        "05" -> "мая"
+        "06" -> "июня"
+        "07" -> "июля"
+        "08" -> "августа"
+        "09" -> "сентября"
+        "10" -> "октября"
+        "11" -> "ноября"
+        "12" -> "декабря"
+        else -> "???"
     }
 
 

@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -52,64 +53,71 @@ class UserWallFragment : Fragment() {
         binding = FragmentUserWallBinding.inflate(inflater, container, false)
         postsAdapter = createPostsAdapter()
         jobsAdapter = createJobsAdapter()
+        binding.postsList.isVisible = true
+        binding.jobsList.isVisible = false
         binding.postsList.adapter = postsAdapter
-        lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
-                userViewModel.dataUsersList.collectLatest { userList ->
-                    user = userList.find {
-                        val id = arguments?.userId
-                        Log.i(
-                            "UserWallFragment", "Navigate to UserWallFragment, userId ${
-                                id?.let { userId ->
-                                    "= $userId"
-                                } ?: "not found"
-                            }")
-                        it.id == id
-                    } ?: return@collectLatest
-                    Log.i("UserWallFragment", "User has been initialized")
-                    with(binding) {
-                        topAppBar.title = user.name
-                        tabs.selectTab(tabs.getTabAt(0))
-                        Glide.with(avatar)
-                            .load(user.avatar)
-                            .apply(
-                                RequestOptions.overrideOf(
-                                    avatar.context.resources.displayMetrics.widthPixels
-                                )
-                            )
-                            .centerCrop()
-                            .listener(object : RequestListener<Drawable> {
-                                override fun onLoadFailed(
-                                    e: GlideException?,
-                                    model: Any?,
-                                    target: Target<Drawable>,
-                                    isFirstResource: Boolean
-                                ): Boolean {
-                                    avatar.visibility = View.GONE
-                                    return false
-                                }
-
-                                override fun onResourceReady(
-                                    resource: Drawable,
-                                    model: Any,
-                                    target: Target<Drawable>?,
-                                    dataSource: DataSource,
-                                    isFirstResource: Boolean
-                                ): Boolean {
-                                    avatar.visibility = View.VISIBLE
-                                    return false
-                                }
-                            })
-                            .timeout(2_000)
-                            .into(avatar)
+        binding.jobsList.adapter = jobsAdapter
+//        lifecycleScope.launch(start = CoroutineStart.UNDISPATCHED) {
+//            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
+//                userViewModel.dataUsersList.collectLatest { userList ->
+//                    user = userList.find {
+//                        val id = arguments?.userId
+//                        Log.i(
+//                            "UserWallFragment", "Navigate to UserWallFragment, userId ${
+//                                id?.let { userId ->
+//                                    "= $userId"
+//                                } ?: "not found"
+//                            }")
+//                        it.id == id
+//                    } ?: return@collectLatest
+        user = arguments?.userId?.let {
+            userViewModel.getUserById(it)
+        } ?: return binding.root
+        Log.i("UserWallFragment", "User has been initialized")
+        with(binding) {
+            topAppBar.title = user.name
+            tabs.selectTab(tabs.getTabAt(0))
+            Glide.with(avatar)
+                .load(user.avatar)
+                .apply(
+                    RequestOptions.overrideOf(
+                        avatar.context.resources.displayMetrics.widthPixels
+                    )
+                )
+                .centerCrop()
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        avatar.visibility = View.GONE
+                        return false
                     }
-                    postViewModel.loadUserWall(user.id)
-                }
-            }
-        }
 
+                    override fun onResourceReady(
+                        resource: Drawable,
+                        model: Any,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        avatar.visibility = View.VISIBLE
+                        return false
+                    }
+                })
+                .timeout(2_000)
+                .into(avatar)
+        }
+        postViewModel.loadUserWall(user.id)
+//                }
+//
+//            }
+//        }
         subscribe()
         setListeners()
+
         return binding.root
     }
 
@@ -120,6 +128,15 @@ class UserWallFragment : Fragment() {
                 postViewModel.data.collectLatest { postList ->
                     postsAdapter.submitList(postList.filter { post ->
                         post.authorId == user.id
+                    })
+                }
+            }
+        }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
+                jobViewModel.data.collectLatest { jobList ->
+                    jobsAdapter.submitList(jobList.filter { job ->
+                        job.ownerId == user.id
                     })
                 }
             }
@@ -159,18 +176,26 @@ class UserWallFragment : Fragment() {
                     when (tab?.position) {
                         0 -> {
                             postViewModel.loadUserWall(user.id)
-                            postsList.adapter = postsAdapter
+                            postsList.isVisible = true
                         }
 
                         1 -> {
                             jobViewModel.loadUserJobs(user.id)
-                            postsList.adapter = jobsAdapter
-
+                            jobsList.isVisible = true
                         }
                     }
                 }
 
                 override fun onTabUnselected(tab: TabLayout.Tab?) {
+                    when (tab?.position) {
+                        0 -> {
+                            postsList.isVisible = false
+                        }
+
+                        1 -> {
+                            jobsList.isVisible = false
+                        }
+                    }
                 }
 
                 override fun onTabReselected(tab: TabLayout.Tab?) {

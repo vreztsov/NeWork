@@ -48,6 +48,6 @@ interface NeWorkDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertJobs(jobs: List<JobEntity>)
 
-    @Query("SELECT * FROM JobEntity")
+    @Query("SELECT * FROM JobEntity ORDER BY id DESC")
     fun getJobs(): Flow<List<JobEntity>>
 }

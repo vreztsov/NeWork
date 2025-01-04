@@ -3,10 +3,10 @@ package ru.vreztsov.nework.viewmodel
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.vreztsov.nework.auth.AppAuth
@@ -28,8 +28,9 @@ class JobViewModel @Inject constructor(
     private val appAuth: AppAuth
 ) : AndroidViewModel(application) {
 
-    val data: LiveData<List<Job>>
-        get() = _data
+    val data: Flow<List<Job>>
+        get() = repository.dataJobs
+    //_data
 //            flow {
 ////            while (true) {
 //                loadAllJobs()
@@ -46,12 +47,6 @@ class JobViewModel @Inject constructor(
     init {
         loadMyJobs()
     }
-
-//    private fun loadAllJobs() = viewModelScope.launch {
-//        repository.dataJobs.collectLatest {
-//            _data = it
-//        }
-//    }
 
     fun loadMyJobs() = viewModelScope.launch {
         try {

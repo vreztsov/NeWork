@@ -70,6 +70,14 @@
                 app:layout_constraintTop_toBottomOf="@id/tabs"
                 tools:listitem="@layout/card_post" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/jobs_list"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/tabs"
+                tools:listitem="@layout/card_post" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ru.vreztsov.nework.util.StickyNestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
