@@ -48,6 +48,7 @@ class UserWallFragment : Fragment() {
     private lateinit var postsAdapter: PostsAdapter
     private lateinit var jobsAdapter: JobsAdapter
     private lateinit var user: User
+    private var tabIndex = 0
     private var isOwn = false
     private val mediaPlayer = MediaPlayer()
     private val postViewModel: PostViewModel by activityViewModels()
@@ -64,19 +65,6 @@ class UserWallFragment : Fragment() {
         binding = FragmentUserWallBinding.inflate(inflater, container, false)
         binding.postsList.isVisible = true
         binding.jobsList.isVisible = false
-//        lifecycleScope.launch(start = CoroutineStart.UNDISPATCHED) {
-//            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
-//                userViewModel.dataUsersList.collectLatest { userList ->
-//                    user = userList.find {
-//                        val id = arguments?.userId
-//                        Log.i(
-//                            "UserWallFragment", "Navigate to UserWallFragment, userId ${
-//                                id?.let { userId ->
-//                                    "= $userId"
-//                                } ?: "not found"
-//                            }")
-//                        it.id == id
-//                    } ?: return@collectLatest
         user = arguments?.userId?.let {
             userViewModel.getUserById(it)
         } ?: return binding.root
@@ -93,7 +81,6 @@ class UserWallFragment : Fragment() {
             }
             addNew.isVisible = isOwn
             if (isOwn) addLogoutButton()
-            tabs.selectTab(tabs.getTabAt(0))
             Glide.with(avatar)
                 .load(user.avatar)
                 .apply(
@@ -128,16 +115,23 @@ class UserWallFragment : Fragment() {
                 .into(avatar)
         }
         postViewModel.loadUserWall(user.id)
-//                }
-//
-//            }
-//        }
         subscribe()
         setListeners()
 
         return binding.root
     }
 
+    override fun onStart() {
+        super.onStart()
+        with(binding.tabs){
+            selectTab(getTabAt(tabIndex))
+        }
+    }
+
+    override fun onStop() {
+        tabIndex = binding.tabs.selectedTabPosition
+        super.onStop()
+    }
 
     private fun subscribe() {
         lifecycleScope.launch {
@@ -201,34 +195,18 @@ class UserWallFragment : Fragment() {
             }
             tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab?) {
-                    when (tab?.position) {
-                        0 -> {
-                            postViewModel.loadUserWall(user.id)
-                            postsList.isVisible = true
-                        }
-
-                        1 -> {
-                            jobViewModel.loadUserJobs(user.id)
-                            jobsList.isVisible = true
-                            addNew.isVisible = isOwn
-                        }
+                    tab?.let {
+                        onUserTabSelected(it)
                     }
                 }
 
                 override fun onTabUnselected(tab: TabLayout.Tab?) {
-                    when (tab?.position) {
-                        0 -> {
-                            postsList.isVisible = false
-                        }
-
-                        1 -> {
-                            jobsList.isVisible = false
-                            addNew.isVisible = false
-                        }
-                    }
                 }
 
                 override fun onTabReselected(tab: TabLayout.Tab?) {
+                    tab?.let {
+                        onUserTabSelected(it)
+                    }
                 }
             })
             addNew.setOnClickListener {
@@ -237,6 +215,26 @@ class UserWallFragment : Fragment() {
                     Bundle().apply {
                         this.userId = user.id
                     })
+            }
+        }
+    }
+
+    private fun onUserTabSelected(tab: TabLayout.Tab){
+        with(binding){
+            when (tab.position) {
+                0 -> {
+                    postViewModel.loadUserWall(user.id)
+                    postsList.isVisible = true
+                    jobsList.isVisible = false
+                    addNew.isVisible = false
+                }
+
+                1 -> {
+                    jobViewModel.loadUserJobs(user.id)
+                    jobsList.isVisible = true
+                    postsList.isVisible = false
+                    addNew.isVisible = isOwn
+                }
             }
         }
     }
