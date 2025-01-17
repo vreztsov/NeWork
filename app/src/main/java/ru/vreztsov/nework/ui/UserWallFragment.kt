@@ -5,8 +5,12 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -23,14 +27,19 @@ import com.bumptech.glide.request.target.Target
 import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import ru.vreztsov.nework.R
 import ru.vreztsov.nework.adapter.JobsAdapter
 import ru.vreztsov.nework.adapter.PostsAdapter
 import ru.vreztsov.nework.databinding.FragmentUserWallBinding
+import ru.vreztsov.nework.dto.Job
 import ru.vreztsov.nework.dto.Post
 import ru.vreztsov.nework.dto.User
+import ru.vreztsov.nework.util.BundleArguments.Companion.job
 import ru.vreztsov.nework.util.BundleArguments.Companion.userId
 import ru.vreztsov.nework.util.listener.AbstractPostOnInteractionListener
+import ru.vreztsov.nework.util.listener.JobOnInteractionListener
 import ru.vreztsov.nework.viewmodel.JobViewModel
+import ru.vreztsov.nework.viewmodel.LoginViewModel
 import ru.vreztsov.nework.viewmodel.PostViewModel
 import ru.vreztsov.nework.viewmodel.UserViewModel
 
@@ -39,10 +48,12 @@ class UserWallFragment : Fragment() {
     private lateinit var postsAdapter: PostsAdapter
     private lateinit var jobsAdapter: JobsAdapter
     private lateinit var user: User
+    private var isOwn = false
     private val mediaPlayer = MediaPlayer()
     private val postViewModel: PostViewModel by activityViewModels()
     private val userViewModel: UserViewModel by activityViewModels()
     private val jobViewModel: JobViewModel by activityViewModels()
+    private val loginViewModel: LoginViewModel by activityViewModels()
 
 
     override fun onCreateView(
@@ -51,12 +62,8 @@ class UserWallFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentUserWallBinding.inflate(inflater, container, false)
-        postsAdapter = createPostsAdapter()
-        jobsAdapter = createJobsAdapter()
         binding.postsList.isVisible = true
         binding.jobsList.isVisible = false
-        binding.postsList.adapter = postsAdapter
-        binding.jobsList.adapter = jobsAdapter
 //        lifecycleScope.launch(start = CoroutineStart.UNDISPATCHED) {
 //            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
 //                userViewModel.dataUsersList.collectLatest { userList ->
@@ -73,9 +80,19 @@ class UserWallFragment : Fragment() {
         user = arguments?.userId?.let {
             userViewModel.getUserById(it)
         } ?: return binding.root
+        isOwn = userViewModel.isOwnProfile(user.id)
         Log.i("UserWallFragment", "User has been initialized")
+        postsAdapter = createPostsAdapter()
+        jobsAdapter = createJobsAdapter()
+        binding.postsList.adapter = postsAdapter
+        binding.jobsList.adapter = jobsAdapter
         with(binding) {
-            topAppBar.title = user.name
+            topAppBar.title = when (isOwn) {
+                true -> "You"
+                false -> "${user.name} / ${user.login}"
+            }
+            addNew.isVisible = isOwn
+            if (isOwn) addLogoutButton()
             tabs.selectTab(tabs.getTabAt(0))
             Glide.with(avatar)
                 .load(user.avatar)
@@ -164,7 +181,18 @@ class UserWallFragment : Fragment() {
             }
         })
 
-    private fun createJobsAdapter() = JobsAdapter() //TODO listener
+    private fun createJobsAdapter() = JobsAdapter(isOwn, object : JobOnInteractionListener {
+        override fun onJobClick(job: Job) {
+            findNavController().navigate(R.id.action_userWallFragment_to_editJobFragment, Bundle().apply {
+                this.job = job
+            })
+            jobViewModel.edit(job)
+        }
+
+        override fun onJobDelete(jobId: Long) {
+            jobViewModel.removeById(jobId)
+        }
+    })
 
     private fun setListeners() {
         with(binding) {
@@ -182,6 +210,7 @@ class UserWallFragment : Fragment() {
                         1 -> {
                             jobViewModel.loadUserJobs(user.id)
                             jobsList.isVisible = true
+                            addNew.isVisible = isOwn
                         }
                     }
                 }
@@ -194,14 +223,41 @@ class UserWallFragment : Fragment() {
 
                         1 -> {
                             jobsList.isVisible = false
+                            addNew.isVisible = false
                         }
                     }
                 }
 
                 override fun onTabReselected(tab: TabLayout.Tab?) {
-                    // todo onSelected или что???
                 }
             })
+            addNew.setOnClickListener {
+                findNavController().navigate(
+                    R.id.action_userWallFragment_to_editJobFragment,
+                    Bundle().apply {
+                        this.userId = user.id
+                    })
+            }
         }
+    }
+
+    private fun addLogoutButton() {
+        binding.topAppBar.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.own_profile_top_app_bar, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean =
+                when (menuItem.itemId) {
+                    R.id.logout -> {
+                        loginViewModel.doLogout()
+                        findNavController().popBackStack(R.id.postsFragment, false)
+                        true
+                    }
+
+                    else -> false
+                }
+
+        }, viewLifecycleOwner)
     }
 }

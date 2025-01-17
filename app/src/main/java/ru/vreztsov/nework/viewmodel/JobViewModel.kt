@@ -12,6 +12,8 @@ import kotlinx.coroutines.launch
 import ru.vreztsov.nework.auth.AppAuth
 import ru.vreztsov.nework.dto.Job
 import ru.vreztsov.nework.repository.Repository
+import ru.vreztsov.nework.util.DataViewTransform
+import java.util.Date
 import javax.inject.Inject
 
 private val empty = Job(
@@ -40,9 +42,9 @@ class JobViewModel @Inject constructor(
 //        }
 
     private var _data: MutableLiveData<List<Job>> = MutableLiveData(emptyList())
-
-
     private val edited = MutableLiveData(empty)
+    var startDate: Long? = null // TODO пересмотри формат даты. Точность нужна до дня, не более того. Одинаковые даты (без учёта времени) должны быть равны.
+    var finishDate: Long? = null
 
     init {
         loadMyJobs()
@@ -76,30 +78,28 @@ class JobViewModel @Inject constructor(
 
     fun edit(job: Job) {
         edited.value = job
-    }
-
-    fun getEditedId(): Long {
-        return edited.value?.id ?: 0
+        startDate = DataViewTransform.parseDateFromNeWorkString(job.start)?.time
+        finishDate = job.finish?.let { DataViewTransform.parseDateFromNeWorkString(it)?.time } ?: startDate
     }
 
     fun changeContent(
         name: String,
         position: String,
-        start: String,
-        finish: String?,
+        startDate: Long,
+        finishDate: Long,
         link: String?
     ) {
         if (edited.value?.name == name
             && edited.value?.position == position
-            && edited.value?.start == start
-            && edited.value?.finish == finish
+            && this.startDate == startDate
+            && this.finishDate == finishDate
             && edited.value?.link == link
         ) return
         edited.value = edited.value?.copy(
             name = name,
             position = position,
-            start = start,
-            finish = finish,
+            start = DataViewTransform.parseDateToNeWorkString(Date(startDate)),
+            finish = if (startDate == finishDate) null else DataViewTransform.parseDateToNeWorkString(Date(finishDate)),
             link = link
         )
     }

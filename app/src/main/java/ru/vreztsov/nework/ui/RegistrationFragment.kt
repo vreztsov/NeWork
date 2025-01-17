@@ -22,6 +22,7 @@ import ru.vreztsov.nework.R
 import ru.vreztsov.nework.auth.RegisterInfo
 import ru.vreztsov.nework.databinding.FragmentRegistrationBinding
 import ru.vreztsov.nework.util.AndroidUtils
+import ru.vreztsov.nework.util.goToUser
 import ru.vreztsov.nework.viewmodel.RegistrationViewModel
 import java.io.File
 
@@ -75,7 +76,7 @@ class RegistrationFragment : Fragment() {
             val navController = findNavController()
             val navUp = navController.navigateUp()
             if (!navUp) {
-                navController.navigate(R.id.action_registrationFragment_to_profileFragment)
+                goToUser(this, viewModel.profileId)
             }
             Log.i(
                 "RegisterFragment was leaved",

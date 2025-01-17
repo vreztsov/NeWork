@@ -67,6 +67,9 @@ class PostViewModel @Inject constructor(
     val isAuthorized: Boolean
         get() = appAuth.authStateFlow.value.id != 0L
 
+    val profileId: Long
+        get() = appAuth.authStateFlow.value.id
+
     private val edited = MutableLiveData(empty)
 
     private val _dataState = MutableLiveData<PostsModelState>()

@@ -11,31 +11,26 @@
         android:label="fragment_registration"
         tools:layout="@layout/fragment_registration" >
         <action
-            android:id="@+id/action_registrationFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
-        <action
             android:id="@+id/action_registrationFragment_to_postsFragment"
             app:destination="@id/postsFragment" />
+        <action
+            android:id="@+id/action_registrationFragment_to_userWallFragment"
+            app:destination="@id/userWallFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/profileFragment"
-        android:name="ru.vreztsov.nework.ui.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/loginFragment"
         android:name="ru.vreztsov.nework.ui.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_loginFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
-        <action
             android:id="@+id/action_loginFragment_to_registrationFragment"
             app:destination="@id/registrationFragment" />
         <action
             android:id="@+id/action_loginFragment_to_postsFragment"
             app:destination="@id/postsFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_userWallFragment"
+            app:destination="@id/userWallFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailedPostFragment"
@@ -79,9 +74,6 @@
             android:id="@+id/action_postsFragment_to_detailedPostFragment"
             app:destination="@id/detailedPostFragment" />
         <action
-            android:id="@+id/action_postsFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
-        <action
             android:id="@+id/action_postsFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
         <action
@@ -112,9 +104,6 @@
             android:id="@+id/action_eventsFragment_to_usersFragment"
             app:destination="@id/usersFragment" />
         <action
-            android:id="@+id/action_eventsFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
-        <action
             android:id="@+id/action_eventsFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
         <action
@@ -133,9 +122,6 @@
             android:id="@+id/action_usersFragment_to_eventsFragment"
             app:destination="@id/eventsFragment" />
         <action
-            android:id="@+id/action_usersFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
-        <action
             android:id="@+id/action_usersFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
         <action
@@ -146,7 +132,11 @@
         android:id="@+id/userWallFragment"
         android:name="ru.vreztsov.nework.ui.UserWallFragment"
         android:label="fragment_user"
-        tools:layout="@layout/fragment_user_wall" />
+        tools:layout="@layout/fragment_user_wall" >
+        <action
+            android:id="@+id/action_userWallFragment_to_editJobFragment"
+            app:destination="@id/editJobFragment" />
+    </fragment>
     <fragment
         android:id="@+id/editPostFragment"
         android:name="ru.vreztsov.nework.ui.EditPostFragment"
@@ -173,4 +163,9 @@
         android:name="ru.vreztsov.nework.ui.MapFragment"
         android:label="fragment_map"
         tools:layout="@layout/fragment_map" />
+    <fragment
+        android:id="@+id/editJobFragment"
+        android:name="ru.vreztsov.nework.ui.EditJobFragment"
+        android:label="fragment_new_job"
+        tools:layout="@layout/fragment_edit_job" />
 </navigation>

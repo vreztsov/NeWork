@@ -2,18 +2,25 @@ package ru.vreztsov.nework.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.vreztsov.nework.databinding.CardJobBinding
 import ru.vreztsov.nework.dto.Job
 import ru.vreztsov.nework.util.DataViewTransform
+import ru.vreztsov.nework.util.listener.JobOnInteractionListener
 
-class JobsAdapter : ListAdapter<Job, JobViewHolder>(JobDiffCallback()) {
+class JobsAdapter(
+    private val isOwn: Boolean,
+    private val listener: JobOnInteractionListener
+) : ListAdapter<Job, JobViewHolder>(JobDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): JobViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return JobViewHolder(
+            isOwn,
             CardJobBinding.inflate(layoutInflater, parent, false),
+            listener
         )
     }
 
@@ -25,16 +32,25 @@ class JobsAdapter : ListAdapter<Job, JobViewHolder>(JobDiffCallback()) {
 }
 
 class JobViewHolder(
+    private val isOwn: Boolean,
     private val binding: CardJobBinding,
+    private val listener: JobOnInteractionListener
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(job: Job) {
         with(binding) {
             company.text = job.name
-            val start = DataViewTransform.jobDataToTextView(job.start)
-            val finish = job.finish?.let { DataViewTransform.jobDataToTextView(it) } ?: "НВ"
-            period.text = String.format("%s - %s", start, finish)
+            period.text = DataViewTransform.periodToString(job)
             position.text = job.position
+            removeJob.isVisible = isOwn
+            if (isOwn) {
+                jobCard.setOnClickListener {
+                    listener.onJobClick(job)
+                }
+                removeJob.setOnClickListener {
+                    listener.onJobDelete(job.id)
+                }
+            }
         }
     }
 }

@@ -55,7 +55,7 @@
     <string name="set_location">Set Location</string>
     <string name="company">Company</string>
     <string name="test_company">ООО \"Рога и копыта\"</string>
-    <string name="test_period">"1 мар 2019 – 1 авг 2020 "</string>
+    <string name="test_period">"1 марта 2019 – 1 августа 2020 "</string>
     <string name="test_position">Главный инженер-программист</string>
     <string name="prompt_post">Post</string>
     <string name="empty_login">Login can\'t be blank</string>
@@ -79,5 +79,11 @@
     <string name="select_location">Select Location</string>
     <string name="error_loading">Error loading</string>
     <string name="retry_loading">Retry loading</string>
+    <string name="select_date">Select date</string>
     <string name="on_success">Success</string>
+    <string name="view_profile">View Profile</string>
+    <string name="logout">Logout</string>
+    <string name="edit_job">Edit Job</string>
+    <string name="prompt_link">Link</string>
+    <string name="delete_job">Delete My Job</string>
 </resources>

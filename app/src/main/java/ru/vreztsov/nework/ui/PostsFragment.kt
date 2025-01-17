@@ -95,7 +95,7 @@ class PostsFragment : Fragment() {
     }
 
     private fun setListeners() {
-        binding.topAppBar.setTopAppBarListener(this, viewModel.isAuthorized)
+        binding.topAppBar.setTopAppBarListener(this, viewModel.isAuthorized, viewModel.profileId)
         binding.bottomNavigation.setBottomNavigationViewListener(this)
         binding.addNewPost.setOnClickListener {
             if (viewModel.isAuthorized) {

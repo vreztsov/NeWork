@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.NewJobFragment">
+    tools:context=".ui.EditJobFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/basic_app_bar"
@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
             app:navigationIcon="@drawable/ic_arrow_back_24"
-            app:title="@string/new_job" />
+            tools:title="@string/new_job" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
@@ -69,7 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:layout_marginBottom="12dp"
-            android:hint="@string/prompt_position">
+            android:hint="@string/prompt_link">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/link_text_field"
@@ -102,9 +102,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/lateral_spacing"
-        android:text="@string/create_job"
         android:textSize="16sp"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:text="@string/create_job" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

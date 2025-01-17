@@ -11,4 +11,7 @@ class EventViewModel @Inject constructor(
 ): ViewModel() {
     val isAuthorized: Boolean
         get() = appAuth.authStateFlow.value.id != 0L
+
+    val profileId: Long
+        get() = appAuth.authStateFlow.value.id
 }

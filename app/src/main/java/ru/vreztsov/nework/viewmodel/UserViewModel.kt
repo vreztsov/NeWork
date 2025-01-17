@@ -24,6 +24,9 @@ class UserViewModel @Inject constructor(
     val isAuthorized: Boolean
         get() = appAuth.authStateFlow.value.id != 0L
 
+    val profileId: Long
+        get() = appAuth.authStateFlow.value.id
+
     val dataUsersList
         get() = repository.dataUsers
 //        get() = flow {
@@ -49,6 +52,9 @@ class UserViewModel @Inject constructor(
         getData()
     }
 
+    fun isOwnProfile(id: Long): Boolean =
+        id != 0L && appAuth.authStateFlow.value.id == id
+
     private fun getData() = viewModelScope.launch {
         try {
             Log.i("Repository", "Loading users list...")
@@ -70,7 +76,7 @@ class UserViewModel @Inject constructor(
 
 
     fun saveSelected(list: List<Long>) {
-        val userList = list.mapNotNull { id -> _dataUsersList.find { it.id == id } }
+        val userList = list.mapNotNull { id -> getUserById(id) }
         _selectedUsersList.value = userList
     }
 }

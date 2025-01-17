@@ -2,9 +2,11 @@ package ru.vreztsov.nework.util
 
 import android.os.Bundle
 import com.google.gson.Gson
+import ru.vreztsov.nework.dto.Job
 import ru.vreztsov.nework.dto.Post
 
 const val EDIT_TITLE = "edit_title"
+const val JOB_AS_JSON = "user_job_as_json"
 const val POST_AS_JSON = "post_as_json"
 const val USER_ID = "user_id"
 const val USER_ID_LIST = "user_id_list"
@@ -24,6 +26,10 @@ class BundleArguments {
                     null
                 }
             }
+
+        var Bundle.job: Job?
+            set(value) = putString(JOB_AS_JSON, gson.toJson(value))
+            get() = gson.fromJson(getString(JOB_AS_JSON), Job::class.java)
 
         var Bundle.userWallType: UserWallType?
             set(value) = putString(USERS_TITLE, value.toString())
@@ -46,6 +52,8 @@ class BundleArguments {
             set(value) = putLongArray(USER_ID_LIST, value?.toLongArray())
             get() = getLongArray(USER_ID_LIST)?.toList()
 
+
+
     }
 }
 
@@ -53,7 +61,9 @@ enum class EditType(val title: String){
     NEW_POST("New Post"),
     EDIT_POST("Edit Post"),
     NEW_EVENT("New Event"),
-    EDIT_EVENT("Edit Event")
+    EDIT_EVENT("Edit Event"),
+    NEW_JOB("New Job"),
+    EDIT_JOB("Edit Job")
 }
 
 enum class UserWallType(val title: String){

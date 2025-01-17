@@ -11,12 +11,15 @@ import ru.vreztsov.nework.dto.Post
 import ru.vreztsov.nework.ui.DetailedEventFragment
 import ru.vreztsov.nework.ui.DetailedPostFragment
 import ru.vreztsov.nework.ui.EventsFragment
+import ru.vreztsov.nework.ui.LoginFragment
 import ru.vreztsov.nework.ui.PostsFragment
+import ru.vreztsov.nework.ui.RegistrationFragment
 import ru.vreztsov.nework.ui.UserListFragment
 import ru.vreztsov.nework.ui.UsersFragment
 import ru.vreztsov.nework.util.BundleArguments.Companion.editType
 import ru.vreztsov.nework.util.BundleArguments.Companion.post
 import ru.vreztsov.nework.util.BundleArguments.Companion.userId
+
 
 fun goToLogin(startFragment: Fragment) {
     val actionFromTo = when {
@@ -51,6 +54,8 @@ fun goToUser(startFragment: Fragment, userId: Long) {
         is DetailedPostFragment -> R.id.action_detailedPostFragment_to_userWallFragment
         is DetailedEventFragment -> R.id.action_detailedEventFragment_to_userWallFragment
         is UserListFragment -> R.id.action_userListFragment_to_userWallFragment
+        is LoginFragment -> R.id.action_loginFragment_to_userWallFragment
+        is RegistrationFragment -> R.id.action_registrationFragment_to_userWallFragment
         else -> null
     }
     actionFromTo?.let {
@@ -58,26 +63,15 @@ fun goToUser(startFragment: Fragment, userId: Long) {
     }
 }
 
-fun goToProfile(startFragment: Fragment) {
-    val actionFromTo = when {
-        (startFragment is PostsFragment) -> R.id.action_postsFragment_to_profileFragment
-        (startFragment is EventsFragment) -> R.id.action_eventsFragment_to_profileFragment
-        (startFragment is UsersFragment) -> R.id.action_usersFragment_to_profileFragment
-        else -> null
-    }
-    actionFromTo?.let {
-        startFragment.findNavController().navigate(it)
-    }
-}
-
 fun MaterialToolbar.setTopAppBarListener(
     fragment: Fragment,
-    isAuthorized: Boolean
+    isAuthorized: Boolean,
+    profileId: Long
 ) = setOnMenuItemClickListener {
     when (it.itemId) {
         R.id.viewProfile -> {
             if (isAuthorized) {
-                goToProfile(fragment)
+                goToUser(fragment, profileId)
             } else {
                 goToLogin(fragment)
             }
@@ -87,7 +81,6 @@ fun MaterialToolbar.setTopAppBarListener(
         else -> false
     }
 }
-
 fun BottomNavigationView.setBottomNavigationViewListener(
     fragment: Fragment
 ) = setOnItemSelectedListener {

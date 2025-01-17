@@ -25,6 +25,9 @@ class LoginViewModel @Inject constructor(
     val isAuthorized: Boolean
         get() = appAuth.authStateFlow.value.id != 0L
 
+    val profileId: Long
+        get() = appAuth.authStateFlow.value.id
+
     private val _loginSuccessEvent = SingleLiveEvent<Unit>()
     val loginSuccessEvent: LiveData<Unit>
         get() = _loginSuccessEvent
@@ -135,5 +138,9 @@ class LoginViewModel @Inject constructor(
         completed = false
         _loginErrorMessage.value = null
         _passwordErrorMessage.value = null
+    }
+
+    fun doLogout(){
+        appAuth.removeAuth()
     }
 }

@@ -30,6 +30,9 @@ class RegistrationViewModel @Inject constructor(
 
     val isAuthorized: Boolean
         get() = appAuth.authStateFlow.value.id != 0L
+    val profileId: Long
+        get() = appAuth.authStateFlow.value.id
+
 
     private val _registerSuccessEvent = SingleLiveEvent<Unit>()
     val registerSuccessEvent: LiveData<Unit>

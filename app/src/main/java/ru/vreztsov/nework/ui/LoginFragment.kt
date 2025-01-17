@@ -16,6 +16,7 @@ import ru.vreztsov.nework.auth.LoginInfo
 import ru.vreztsov.nework.databinding.FragmentLoginBinding
 import ru.vreztsov.nework.util.AndroidUtils
 import ru.vreztsov.nework.util.AndroidUtils.showToast
+import ru.vreztsov.nework.util.goToUser
 import ru.vreztsov.nework.viewmodel.LoginViewModel
 
 @AndroidEntryPoint
@@ -54,7 +55,7 @@ class LoginFragment : Fragment() {
             val navController = findNavController()
             val navUp = navController.navigateUp()
             if (!navUp){
-                navController.navigate(R.id.action_loginFragment_to_profileFragment)
+                goToUser(this, viewModel.profileId)
             }
             Log.i(
                 "LoginFragment was leaved",
